@@ -1,0 +1,608 @@
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: 	  <http://www.w3.org/2002/07/owl#> . 
+@prefix foaf:     <http://xmlns.com/foaf/0.1/#> .
+@prefix a:        <http://www.example.org/OWL2InstanceData#> .
+@prefix ex: 	  <http://www.example.org/ex#> .
+@prefix : 	      <http://dublincore.org/dc-dsp/ex#> .
+@prefix dsp:      <http://dublincore.org/dc-dsp#> .
+@prefix dcterms:  <http://purl.org/dc/terms#> .
+@prefix swrc:     <http://swrc.ontoware.org/ontology#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcam:     <http://purl.org/dc/dcam#> .
+
+# ---------------
+# all constraints:
+
+# <DescriptionTemplate ID="document" minOccurs="1" maxOccurs="1" standalone="yes">
+:document
+	a dsp:DescriptionTemplate ;
+	dsp:standalone "true"^^xsd:boolean ;
+	dsp:minOccur "2"^^xsd:nonNegativeInteger ;
+	dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+
+	# <ResourceClass>http://purl.org/dc/terms/Text</ResourceClass>
+	dsp:resourceClass dcterms:Text ;
+	
+    # <StatementTemplate minOccurs="1" maxOccurs="1" type="nonliteral">
+	dsp:statementTemplate [
+		a dsp:NonLiteralStatementTemplate ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		
+		# <Property>http://purl.org/dc/terms/creator</Property>
+		dsp:property dcterms:creator ;
+		
+		# <SubPropertyOf></SubPropertyOf>
+		# dsp:subPropertyOf ...
+		
+		# <NonliteralConstraint descriptionTemplateRef="">
+		# <NonLiteralConstraint descriptionTemplateID="person">
+	    dsp:nonLiteralConstraint [
+			a dsp:NonLiteralConstraint ;
+			dsp:descriptionTemplate :person ;
+			
+			# <ValueClass></ValueClass>
+			# dsp:valueClass ...
+			
+			# <ValueURIOccurrence>disallowed</ValueURIOccurrence>
+			dsp:valueURIOccurrence "disallowed"^^dsp:occurrence ;
+			
+			# <ValueURI></ValueURI>
+			# dsp:valueURI ""^^xsd:URI
+			
+			# <VocabularyEncodingSchemeOccurrence>disallowed</VocabularyEncodingSchemeOccurrence>
+			dsp:vocabularyEncodingSchemeOccurrence "disallowed"^^dsp:occurrence ;
+			
+			# <VocabularyEncodingScheme></VocabularyEncodingScheme>
+			# dsp:vocabularyEncodingScheme ...
+			
+			# <ValueStringConstraint minOccur="0" maxOccur="1"/>
+			dsp:valueStringConstraint [
+				a dsp:ValueStringConstraint ;
+				dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+				dsp:maxOccur "1"^^xsd:nonNegativeInteger 
+				
+				# <LiteralOption lang="" SES=""></LiteralOption>
+				# dsp:literal "value string"@en^^xsd:string ;
+
+				# <LanguageOccurrence></LanguageOccurrence>
+				# dsp:languageOccurrence ""^^dsp:occurrence ;
+				
+				# <Language></Language>
+				# dsp:language ""^^xsd:language ;
+				
+				# <SyntaxEncodingSchemeOccurrence></SyntaxEncodingSchemeOccurrence>
+				# dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence ;
+				
+				# <SyntaxEncodingScheme></SyntaxEncodingScheme>
+				# dsp:syntaxEncodingScheme ... .
+			] 
+		] 
+	] .
+	
+# <DescriptionTemplate ID="person" standalone="no">
+:person
+	a dsp:DescriptionTemplate ;
+	dsp:standalone "false"^^xsd:boolean ;
+
+	# <ResourceClass>http://xmlns.com/foaf/0.1/Person</ResourceClass>
+	dsp:resourceClass foaf:Person ;
+	
+	# <StatementTemplate minOccurs="1" maxOccurs="1" type="literal">
+	dsp:statementTemplate [
+		a dsp:LiteralStatementTemplate ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		
+		# <Property>http://xmlns.com/foaf/0.1/name</Property>
+		dsp:property foaf:name ;
+		
+		# <SubPropertyOf></SubPropertyOf>
+		# dsp:subPropertyOf ...
+		
+		# <LiteralConstraint>
+		dsp:literalConstraint [
+			a dsp:LiteralConstraint ;
+			
+			# <LiteralOption lang="" SES=""></LiteralOption>
+			# dsp:literal "literal"@en^^xsd:string ;
+			dsp:literal "literal"^^xsd:string ;
+			
+			# <LanguageOccurrence>disallowed</LanguageOccurrence>
+			dsp:languageOccurrence "disallowed"^^dsp:occurrence ;
+			
+			# <Language></Language>
+			dsp:language ""^^xsd:language ;
+			
+			# <SyntaxEncodingSchemeOccurrence></SyntaxEncodingSchemeOccurrence>
+			dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence 
+			
+			# <SyntaxEncodingScheme></SyntaxEncodingScheme>
+			# dsp:syntaxEncodingScheme ... .
+		] 
+	] .
+
+# -----
+
+# ---------------
+# complete running example
+
+	:bookDescriptionTemplate # 5.1. Identifier
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; # 5.2. Standalone
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; # 5.3. Minimum occurrence constraint
+		dsp:maxOccur "infinity"^^xsd:nonNegativeInteger ; # 5.4. Maximum occurrence constraint
+		dsp:resourceClass swrc:Book ; # 5.5. Resource Class Membership Constraint
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; # 6.1. Minimum occurrence constraint
+			dsp:maxOccur "5"^^xsd:nonNegativeInteger ; # 6.2. Maximum occurrence constraint
+			dsp:property dcterms:subject ; # 6.4.1. Property list constraint
+			dsp:nonLiteralConstraint [ # 6.3. Type constraint
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :subjectDescriptionTemplate ; # 6.6.1. Description template reference
+				dsp:valueClass skos:Concept ; # 6.6.2. Class membership constraint
+				dsp:valueURIOccurrence "mandatory"^^dsp:occurrence ; # 6.6.3.1. Value URI occurrence constraint
+				dsp:valueURI :ComputerScience, :SocialScience, :Librarianship ; # 6.6.3.2. Value URI list constraint
+				dsp:vocabularyEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ; # 6.6.4.1. Vocabulary encoding scheme occurrence constraint
+				dsp:vocabularyEncodingScheme :BookSubjects ; # 6.6.4.2. Vocabulary encoding scheme list constraint
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; # 6.6.5.1. Minimum occurrence constraint
+					dsp:maxOccur "1"^^xsd:nonNegativeInteger ; # 6.6.5.2. Maximum occurrence constraint
+					dsp:literal "Computer Science"@en , "Computer Science"^^xsd:string ; # 6.5.1. Literal list constraint
+					dsp:literal "Social Science"@en , "Social Science"^^xsd:string ;
+					dsp:literal "Librarianship"@en , "Librarianship"^^xsd:string ;
+					dsp:languageOccurrence "optional"^^dsp:occurrence ; # 6.5.2. Literal language constraint
+					dsp:language "en"^^xsd:language ; # 6.5.3. Literal language list constraint
+					dsp:syntaxEncodingSchemeOccurrence "optional"^^dsp:occurrence ; # 6.5.4. Syntax Encoding Scheme constraint
+					dsp:syntaxEncodingScheme xsd:string # 6.5.5. Syntax Encoding Scheme list constraint
+				] 
+			] 
+		] .
+	
+	:ArtficialIntelligence
+		a owl:Thing, swrc:Book ;
+		dcterms:subject :ComputerScience .
+	:ComputerScience
+		a owl:Thing, skos:Concept ;
+		dcam:memberOf :BookSubjects ;
+		skos:inScheme :BookSubjects ;
+		rdf:value "ComputerScience"@en .
+	:BookSubjects
+		a owl:Thing, skos:ConceptScheme .
+
+# -----
+
+# ---------------
+# Description Templates - Identifier
+
+
+# -----
+
+# ---------------
+# Description Templates - Standalone
+
+	# yes:
+	# -----
+	:DescriptionTemplates_Standalone_Yes_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_Yes_C1 ; 
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject ;
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :DescriptionTemplates_Standalone_Yes_DT2 ;  
+				dsp:valueClass DescriptionTemplates_Standalone_Yes_C2 ] ] .
+	:DescriptionTemplates_Standalone_Yes_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "yes"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_Yes_C2 .
+	:DescriptionTemplates_Standalone_Yes_I2
+		a DescriptionTemplates_Standalone_Yes_C2 , owl:Thing .
+
+	# no:
+	# -----
+	:DescriptionTemplates_Standalone_No_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_No_C1 ; 
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject ;
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :DescriptionTemplates_Standalone_No_DT2 ;  
+				dsp:valueClass DescriptionTemplates_Standalone_No_C2 ] ] .
+	:DescriptionTemplates_Standalone_No_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "no"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_No_C2 .
+	:DescriptionTemplates_Standalone_No_I1
+		a DescriptionTemplates_Standalone_No_C1 , owl:Thing ;
+		dcterms:subject :DescriptionTemplates_Standalone_No_I2 .
+	:DescriptionTemplates_Standalone_No_I2
+		a DescriptionTemplates_Standalone_No_C2 , owl:Thing .
+		
+	# both:
+	# -----
+	:DescriptionTemplates_Standalone_Both_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_Both_C1 ; 
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject ;
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :DescriptionTemplates_Standalone_Both_DT2 ;  
+				dsp:valueClass DescriptionTemplates_Standalone_Both_C2 ] ] .
+	:DescriptionTemplates_Standalone_Both_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "no"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_Standalone_Both_C2 .
+	:DescriptionTemplates_Standalone_Both_I1
+		a DescriptionTemplates_Standalone_Both_C1 , owl:Thing .
+#		dcterms:subject :DescriptionTemplates_Standalone_Both_I2 .
+	:DescriptionTemplates_Standalone_Both_I2
+		a DescriptionTemplates_Standalone_Both_C2 , owl:Thing .
+
+# -----
+
+# ---------------
+# Description Templates - Minimum occurrence constraint
+
+
+	# The minimum number of times this kind of description must appear in the Description Set. 
+	# -----
+	:DescriptionTemplate_MinimumOccurrenceConstraint_1
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "2"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
+		
+	:DescriptionTemplate_MinimumOccurrenceConstraint_I1
+		a owl:Thing ;
+		a :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
+		
+	:DescriptionTemplate_MinimumOccurrenceConstraint_I2
+		a owl:Thing ;
+		a :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
+
+	# dsp:minOccur <= dsp:maxOccur
+	# -----
+#	:DescriptionTemplate_MinimumOccurrenceConstraint_2
+#		a dsp:DescriptionTemplate ;
+#		dsp:minOccur "4"^^xsd:nonNegativeInteger ;
+#		dsp:maxOccur "3"^^xsd:nonNegativeInteger .
+
+# -----
+
+# ---------------
+# Description Templates - Maximum occurrence constraint
+
+
+	# The maximum number of times this kind of description is allowed to appear in the Description Set. 
+	# -----
+	:DescriptionTemplate_MaximumOccurrenceConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
+		
+	:DescriptionTemplate_MaximumOccurrenceConstraint_I1
+		a owl:Thing ;
+		a :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
+		
+#	:DescriptionTemplate_MaximumOccurrenceConstraint_I2
+#		a owl:Thing ;
+#		a :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
+
+# -----
+
+# ---------------
+# Description Templates - Resource Class Membership Constraint
+
+
+	:DescriptionTemplates_ResourceClassMembershipConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C1 ;
+		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C2 ;
+		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "2"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "2"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject .
+	:DescriptionTemplates_ResourceClassMembershipConstraint_I1
+		a DescriptionTemplates_ResourceClassMembershipConstraint_C2 , owl:Thing ;
+		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I2 .
+#		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I3 .
+
+# -----
+
+# ---------------
+# Statement Templates - Minimum occurrence constraint
+
+
+	# The minimum number of times this kind of statement must appear in the enclosing Description. 
+	# -----
+	:StatementTemplate_MinimumOccurrenceConstraint_1
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "2"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:creator ] .
+	:StatementTemplate_MinimumOccurrenceConstraint_I1
+		a owl:Thing ;
+		a :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_1 ;
+		dcterms:creator :StatementTemplate_MinimumOccurrenceConstraint_I2 ;
+		dcterms:creator :StatementTemplate_MinimumOccurrenceConstraint_I3 .
+		
+	# dsp:minOccur <= dsp:maxOccur
+	:StatementTemplate_MinimumOccurrenceConstraint_2
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_2 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "2"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:creator ] .
+
+# -----
+
+# ---------------
+# Statement Templates - Maximum occurrence constraint
+
+
+	# The maximum number of times this kind of statement is allowed to appear in the enclosing Description.
+	# -----
+	:StatementTemplate_MaximumOccurrenceConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MaximumOccurrenceConstraint_ResourceClass1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:creator ] .
+	:StatementTemplate_MaximumOccurrenceConstraint_I1
+		a owl:Thing ;
+		a :StatementTemplate_MaximumOccurrenceConstraint_ResourceClass1 ;
+#		dcterms:creator :StatementTemplate_MaximumOccurrenceConstraint_I2 ;
+		dcterms:creator :StatementTemplate_MaximumOccurrenceConstraint_I3 .
+
+# -----
+
+# ---------------
+# Property Constraints - Property List Constraint
+
+
+	:PropertyConstraints_PropertyListConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :PropertyConstraints_PropertyListConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "5"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:property foaf:familyName ;
+			dsp:property foaf:firstName
+			] .
+	:PropertyConstraints_PropertyListConstraint_I1
+		a owl:Thing ;
+		a :PropertyConstraints_PropertyListConstraint_ResourceClass_1 ;
+#		foaf:lastName "literal"^^xsd:string ;
+		foaf:name "literal"^^xsd:string ;
+		foaf:familyName "literal"^^xsd:string ;
+		foaf:firstName "literal"^^xsd:string .
+
+# -----
+
+# ---------------
+# Property Constraints - Sub-Property Constraint
+
+
+
+
+# -----
+
+# ---------------
+# Literal Value Constraints - Literal List Constraint
+
+
+	:LiteralValueConstraints_LiteralListConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "20"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "literal 1"@en ;
+				dsp:literal "literal 2"@de ;
+				dsp:literal "3"^^xsd:string ;
+				dsp:literal "4"^^xsd:nonNegativeInteger 
+				] ] .
+	:LiteralValueConstraints_LiteralListConstraint_I1
+		a owl:Thing ;
+		a :LiteralValueConstraints_LiteralListConstraint_ResourceClass_1 ;
+#		foaf:name "XXXXX" ; # different literal
+		foaf:name "literal 1"@en ;
+#		foaf:name "literal 1"@de ; # different language tag
+		foaf:name "literal 2"@de ;
+		foaf:name "3"^^xsd:string ;
+#		foaf:name "3"^^xsd:nonNegativeInteger ; # different datatype
+		foaf:name "4"^^xsd:nonNegativeInteger .
+		
+# -----
+
+# ---------------
+# Literal Value Constraints - Literal Language Constraint
+
+
+	# mandatory
+	:LiteralValueConstraints_LiteralLanguageConstraint_1
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "literal" ;
+				dsp:literal "literal"@en ;
+				dsp:languageOccurrence "mandatory"^^dsp:occurrence 
+				] ] .
+	:LiteralValueConstraints_LiteralLanguageConstraint_I1
+		a owl:Thing ;
+		a :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_1 ;
+#		foaf:name "literal" .
+		foaf:name "literal"@en .
+		
+	# disallowed
+	:LiteralValueConstraints_LiteralLanguageConstraint_2
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_2 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "literal" ;
+				dsp:literal "literal"@en ;
+				dsp:languageOccurrence "disallowed"^^dsp:occurrence 
+				] ] .
+	:LiteralValueConstraints_LiteralLanguageConstraint_I2
+		a owl:Thing ;
+		a :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_2 ;
+#		foaf:name "literal"@en .
+		foaf:name "literal" .
+
+# -----
+
+# ---------------
+# Literal Value Constraints - Literal Language List Constraint
+
+
+	:LiteralValueConstraints_LiteralLanguageListConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageListConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "literal"@en ;
+				dsp:literal "literal"@de ;
+				dsp:literal "literal"@fr ;
+				dsp:language "en"^^xsd:language ;
+				dsp:language "de"^^xsd:language 
+#				dsp:language "en" ;
+#				dsp:language "de" 
+				] ] .
+	:LiteralValueConstraints_LiteralLanguageListConstraint_I1
+		a :LiteralValueConstraints_LiteralLanguageListConstraint_ResourceClass_1 , owl:Thing ;
+		foaf:name "literal"@en ;
+		foaf:name "literal"@de ;
+		foaf:name "literal"@fr .
+
+# -----
+
+# ---------------
+# Literal Value Constraints - Syntax Encoding Scheme Constraint
+
+
+	# mandatory
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_1
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"^^xsd:string ;
+				dsp:literal "2"@en ;
+				dsp:syntaxEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ] ] .
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_I1
+		a :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_ResourceClass_1 , owl:Thing ;
+		foaf:name "1"^^xsd:string ;
+		foaf:name "2"@en .
+
+# -----
+
+# ---------------
+# Literal Value Constraints - Syntax Encoding Scheme List Constraint
+
+
+	:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_ResourceClass_1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"^^xsd:string ;
+				dsp:literal "2"^^xsd:nonNegativeInteger ;
+				dsp:literal "3"^^xsd:integer ;
+				dsp:syntaxEncodingScheme xsd:string ;
+				dsp:syntaxEncodingScheme xsd:nonNegativeInteger ] ] .
+	:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_I1
+		a :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_ResourceClass_1 , owl:Thing ;
+		foaf:name "1"^^xsd:string ;
+		foaf:name "2"^^xsd:nonNegativeInteger .
+#		foaf:name "3"^^xsd:integer .
+
+# -----
