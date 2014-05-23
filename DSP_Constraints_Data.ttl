@@ -13,7 +13,7 @@
 @prefix dcam:     <http://purl.org/dc/dcam#> .
 
 # ---------------
-# all constraints:
+# Mapping of DSP-RDF to DSP-XML:
 
 # <DescriptionTemplate ID="document" minOccurs="1" maxOccurs="1" standalone="yes">
 :document
@@ -77,10 +77,7 @@
 				# dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence ;
 				
 				# <SyntaxEncodingScheme></SyntaxEncodingScheme>
-				# dsp:syntaxEncodingScheme ... .
-			] 
-		] 
-	] .
+				# dsp:syntaxEncodingScheme ... . ] ] ] .
 	
 # <DescriptionTemplate ID="person" standalone="no">
 :person
@@ -120,9 +117,7 @@
 			dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence 
 			
 			# <SyntaxEncodingScheme></SyntaxEncodingScheme>
-			# dsp:syntaxEncodingScheme ... .
-		] 
-	] .
+			# dsp:syntaxEncodingScheme ... . ] ] .
 
 # -----
 

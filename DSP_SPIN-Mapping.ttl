@@ -101,12 +101,12 @@ owl:Thing
 		#   Literal Language Constraint
 		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory ] ,
 		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed ] ,
-		#   Literal Language List Constraint
+		#   Literal Language List Constraint [done]
 		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint ] ,
 #		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint_Testing ] ,
 		#   Syntax Encoding Scheme Constraint
 #		[   a dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory ] ,
-		#   Syntax Encoding Scheme List Constraint
+		#   Syntax Encoding Scheme List Constraint [done]
 		[   a dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint ] .
 		
 # -----
@@ -1129,11 +1129,14 @@ dsp2spin:PropertyConstraints_Sub-PropertyConstraint
 # -----
 
 # ---------------
-# Literal Value Constraints - Literal List Constraint [done]
+# Literal Value Constraints - Literal List Constraint 
 
 
-# Literals that are allowed as values:
-# Allowed values: list of literals, i.e. (string, language tag) or (string, syntax encoding scheme URI) pairs. 
+# Summary: Literals that are allowed as values. [done]
+# Allowed values: a list of literals, i.e. (string, language tag) or (string, syntax encoding scheme URI) pairs. [done]
+# Default: no constraint [done]
+# Conditions: if given, no other literal constraint may be given 
+
 
 # -----
 dsp2spin:LiteralValueConstraints_LiteralListConstraint
@@ -1251,7 +1254,8 @@ dsp2spin:LiteralValueConstraints_LiteralListConstraint
 # Default: optional [done]
 # Conditions: if "mandatory", Syntax encoding schemes are automatically disallowed 
 
-# 
+
+# dsp:languageOccurrence "mandatory"^^dsp:occurrence 
 # -----
 dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory
 	a spin:Template; 
@@ -1366,7 +1370,9 @@ dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory
 					sp:arg1 "language mandatory for literal ( '" ;
 					sp:arg2 [ sp:varName "literal" ] ;
 					sp:arg3 "')" ] ] ) ].
-					
+				
+# dsp:languageOccurrence "disallowed"^^dsp:occurrence 				
+# -----
 dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -1493,7 +1499,7 @@ dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed
 # Allowed values: a list consisting of language tags 
 # Default: no constraint  
 
-# 
+
 # -----
 dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint
 	a spin:Template; 
@@ -1636,6 +1642,8 @@ dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint
 						sp:arg4 [ sp:varName "literal" ] ;
 						sp:arg5 " )" ] ] ) ].
 					
+# testing
+# -----
 dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint_Testing
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -1790,16 +1798,17 @@ dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint_Testing
 # Literal Value Constraints - Syntax Encoding Scheme Constraint
 
 
-# Summary: Whether Syntax Encoding Schemes are allowed for the literal 
-# Allowed values: mandatory, optional, disallowed 
-# Default: optional
-# Conditions: if "mandatory", language tags are automatically disallowed. [todo]
+# Summary: Whether Syntax Encoding Schemes are allowed for the literal [done]
+# Allowed values: mandatory, optional, disallowed [done]
+# Default: optional [done]
+# Conditions: if "mandatory", language tags are automatically disallowed. 
 
 # limitations
 # - If there is no datatype IRI and no language tag, the datatype is xsd:string
 # - If there is a language tag, the datatype is rdf:langString
 
-# 
+
+# dsp:syntaxEncodingSchemeOccurrence "mandatory"^^dsp:occurrence
 # -----
 dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory
 	a spin:Template; 
@@ -1956,6 +1965,7 @@ dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory
 # Default: no constraint 
 
 
+# -----
 dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -2100,7 +2110,7 @@ dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
 # Allowed values: an identifier defined in a Description Template 
 # Default: Related description not allowed 
 # Conditions: if given, any related description of the value within the record must match the referenced Description Template. 
-#              If the referenced Description Template contains mandatory Statement templates, such a description of the value must exist. 
+#             If the referenced Description Template contains mandatory Statement templates, such a description of the value must exist. 
 
 # 
 # -----
