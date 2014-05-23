@@ -192,7 +192,7 @@
 		dsp:standalone "true"^^xsd:boolean ;
 		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_Yes_C1 ; 
+		dsp:resourceClass :DescriptionTemplates_Standalone_Yes_C1 ; 
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -201,73 +201,73 @@
 			dsp:nonLiteralConstraint [ 
 				a dsp:NonLiteralConstraint ;
 				dsp:descriptionTemplate :DescriptionTemplates_Standalone_Yes_DT2 ;  
-				dsp:valueClass DescriptionTemplates_Standalone_Yes_C2 ] ] .
+				dsp:valueClass :DescriptionTemplates_Standalone_Yes_C2 ] ] .
 	:DescriptionTemplates_Standalone_Yes_DT2
 		a dsp:DescriptionTemplate ;
-		dsp:standalone "yes"^^xsd:boolean ;
+		dsp:standalone "true"^^xsd:boolean ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_Yes_C2 .
+		dsp:resourceClass :DescriptionTemplates_Standalone_Yes_C2 .
 	:DescriptionTemplates_Standalone_Yes_I2
-		a DescriptionTemplates_Standalone_Yes_C2 , owl:Thing .
+		a :DescriptionTemplates_Standalone_Yes_C2 , owl:Thing .
 
 	# no:
 	# -----
 	:DescriptionTemplates_Standalone_No_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ;
-		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_No_C1 ; 
+		dsp:resourceClass :DescriptionTemplates_Standalone_No_C1 ; 
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
-			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
 			dsp:property dcterms:subject ;
 			dsp:nonLiteralConstraint [ 
 				a dsp:NonLiteralConstraint ;
 				dsp:descriptionTemplate :DescriptionTemplates_Standalone_No_DT2 ;  
-				dsp:valueClass DescriptionTemplates_Standalone_No_C2 ] ] .
+				dsp:valueClass :DescriptionTemplates_Standalone_No_C2 ] ] .
 	:DescriptionTemplates_Standalone_No_DT2
 		a dsp:DescriptionTemplate ;
-		dsp:standalone "no"^^xsd:boolean ;
+		dsp:standalone "false"^^xsd:boolean ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_No_C2 .
+		dsp:resourceClass :DescriptionTemplates_Standalone_No_C2 .
 	:DescriptionTemplates_Standalone_No_I1
-		a DescriptionTemplates_Standalone_No_C1 , owl:Thing ;
+		a :DescriptionTemplates_Standalone_No_C1 , owl:Thing ;
 		dcterms:subject :DescriptionTemplates_Standalone_No_I2 .
 	:DescriptionTemplates_Standalone_No_I2
-		a DescriptionTemplates_Standalone_No_C2 , owl:Thing .
+		a :DescriptionTemplates_Standalone_No_C2 , owl:Thing .
 		
 	# both:
 	# -----
 	:DescriptionTemplates_Standalone_Both_DT1
 		a dsp:DescriptionTemplate ;
-		dsp:standalone "true"^^xsd:boolean ;
-		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:standalone "yes"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_Both_C1 ; 
+		dsp:resourceClass :DescriptionTemplates_Standalone_Both_C1 ; 
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
-			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
 			dsp:property dcterms:subject ;
 			dsp:nonLiteralConstraint [ 
 				a dsp:NonLiteralConstraint ;
 				dsp:descriptionTemplate :DescriptionTemplates_Standalone_Both_DT2 ;  
-				dsp:valueClass DescriptionTemplates_Standalone_Both_C2 ] ] .
+				dsp:valueClass :DescriptionTemplates_Standalone_Both_C2 ] ] .
 	:DescriptionTemplates_Standalone_Both_DT2
 		a dsp:DescriptionTemplate ;
-		dsp:standalone "no"^^xsd:boolean ;
+		dsp:standalone "both"^^xsd:string ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_Standalone_Both_C2 .
+		dsp:resourceClass :DescriptionTemplates_Standalone_Both_C2 .
 	:DescriptionTemplates_Standalone_Both_I1
-		a DescriptionTemplates_Standalone_Both_C1 , owl:Thing .
+		a :DescriptionTemplates_Standalone_Both_C1 , owl:Thing .
 #		dcterms:subject :DescriptionTemplates_Standalone_Both_I2 .
 	:DescriptionTemplates_Standalone_Both_I2
-		a DescriptionTemplates_Standalone_Both_C2 , owl:Thing .
+		a :DescriptionTemplates_Standalone_Both_C2 , owl:Thing .
 
 # -----
 
@@ -331,18 +331,18 @@
 		dsp:standalone "true"^^xsd:boolean ;
 		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C1 ;
-		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C2 ;
-		dsp:resourceClass DescriptionTemplates_ResourceClassMembershipConstraint_C3 ;
+		dsp:resourceClass :DescriptionTemplates_ResourceClassMembershipConstraint_C1 ;
+		dsp:resourceClass :DescriptionTemplates_ResourceClassMembershipConstraint_C2 ;
+		dsp:resourceClass :DescriptionTemplates_ResourceClassMembershipConstraint_C3 ;
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
 			dsp:minOccur "2"^^xsd:nonNegativeInteger ;
 			dsp:maxOccur "2"^^xsd:nonNegativeInteger ; 
-			dsp:property dcterms:subject .
+			dsp:property dcterms:subject ] .
 	:DescriptionTemplates_ResourceClassMembershipConstraint_I1
-		a DescriptionTemplates_ResourceClassMembershipConstraint_C2 , owl:Thing ;
-		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I2 .
-#		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I3 .
+		a :DescriptionTemplates_ResourceClassMembershipConstraint_C2 , owl:Thing ;
+		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I2 ;
+		dcterms:subject :DescriptionTemplates_ResourceClassMembershipConstraint_I3 .
 
 # -----
 
@@ -413,8 +413,7 @@
 			dsp:maxOccur "5"^^xsd:nonNegativeInteger ;
 			dsp:property foaf:name ;
 			dsp:property foaf:familyName ;
-			dsp:property foaf:firstName
-			] .
+			dsp:property foaf:firstName ] .
 	:PropertyConstraints_PropertyListConstraint_I1
 		a owl:Thing ;
 		a :PropertyConstraints_PropertyListConstraint_ResourceClass_1 ;
@@ -422,6 +421,19 @@
 		foaf:name "literal"^^xsd:string ;
 		foaf:familyName "literal"^^xsd:string ;
 		foaf:firstName "literal"^^xsd:string .
+		
+	# A property list constraint cannot occur together with a sub-property constraint
+	:PropertyConstraints_PropertyListConstraint_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :PropertyConstraints_PropertyListConstraint_C2 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "5"^^xsd:nonNegativeInteger ;
+#			dsp:property :p1 ;
+			dsp:subPropertyOf :p2 ] .
 
 # -----
 
@@ -429,7 +441,24 @@
 # Property Constraints - Sub-Property Constraint
 
 
-
+	:PropertyConstraints_Sub-PropertyConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :PropertyConstraints_Sub-PropertyConstraint_C1 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "5"^^xsd:nonNegativeInteger ;
+			dsp:subPropertyOf :superP ] .
+	:subP1 rdfs:subPropertyOf :superP .
+	:subP2 rdfs:subPropertyOf :superP .
+	:PropertyConstraints_Sub-PropertyConstraint_I1
+		a :PropertyConstraints_Sub-PropertyConstraint_C1 , owl:Thing ;
+#		:otherP "" ;
+		:superP "" ;
+		:subP1 "" ;
+		:subP2 "" .
 
 # -----
 
@@ -540,14 +569,12 @@
 				dsp:literal "literal"@fr ;
 				dsp:language "en"^^xsd:language ;
 				dsp:language "de"^^xsd:language 
-#				dsp:language "en" ;
-#				dsp:language "de" 
 				] ] .
 	:LiteralValueConstraints_LiteralLanguageListConstraint_I1
 		a :LiteralValueConstraints_LiteralLanguageListConstraint_ResourceClass_1 , owl:Thing ;
 		foaf:name "literal"@en ;
-		foaf:name "literal"@de ;
-		foaf:name "literal"@fr .
+		foaf:name "literal"@de .
+#		foaf:name "literal"@fr .
 
 # -----
 

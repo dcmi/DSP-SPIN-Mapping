@@ -33,26 +33,23 @@
 
 owl:Thing
 	spin:constraint 
-		# Identifier
+		#   Identifier [done]
 		
-		# Standalone
-		[   a dsp2spin:DescriptionTemplates_Standalone ] ,
+		#   Standalone
+		[   a dsp2spin:DescriptionTemplates_Standalone_No ] ,
 		
-		# Minimum occurrence constraint
-		[   a dsp:DescriptionTemplates_MinimumOccurrenceConstraint_1 ] ,
+		#   Minimum Occurrence Constraint
+		[   a dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_1 ] ,
 		
-		# Maximum occurrence constraint
-		[   a dsp:DescriptionTemplates_MaximumOccurrenceConstraint ] .
+		#   Maximum Occurrence Constraint
+		[   a dsp2spin:DescriptionTemplates_MaximumOccurrenceConstraint ] .
 		
-		# Resource Class Membership Constraint 
-		
+		#   Resource Class Membership Constraint [done]
 		
 dsp:DescriptionTemplate
 	spin:constraint 
-		# Description Template - Minimum occurrence constraint
-		[   a dsp:DescriptionTemplates_MinimumOccurrenceConstraint_2 ] ,
-		# Statement Template - Minimum occurrence constraint
-		[   a dsp:StatementTemplates_MinimumOccurrenceConstraint_2 ] .
+		#   Minimum Occurrence Constraint
+		[   a dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_2 ] .
 
 # -----
 
@@ -62,31 +59,34 @@ dsp:DescriptionTemplate
 
 owl:Thing
 	spin:constraint 
-		# Minimum occurrence constraint
-		[   a dsp:StatementTemplates_MinimumOccurrenceConstraint_1 ] ,
-		# Maximum occurrence constraint
-		[   a dsp:StatementTemplates_MaximumOccurrenceConstraint ] .
+		#   Minimum occurrence constraint
+		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_1 ] ,
+		#   Maximum occurrence constraint
+		[   a dsp2spin:StatementTemplates_MaximumOccurrenceConstraint ] .
+		#   Type Constraint [done]
 
-#dsp:NonLiteralStatementTemplate
-#	spin:constraint 
-#		# Minimum occurrence constraint
-#		[   a dsp:StatementTemplates_MinimumOccurrenceConstraint_2 ] .
-		
-#dsp:LiteralStatementTemplate
-#	spin:constraint 
-#		# Minimum occurrence constraint
-#		[   a dsp:StatementTemplates_MinimumOccurrenceConstraint_2 ] .
+dsp:DescriptionTemplate
+	spin:constraint 
+		#   Minimum Occurrence Constraint
+		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_2 ] .
 		
 # -----
 
 # ---------------
-# Property Constraints
+# Property Constraints [done]
 
 
 owl:Thing
 	spin:constraint 
-		# Property List Constraint
-		[   a dsp:PropertyConstraints_PropertyListConstraint ] .
+		#   Property List Constraint [done]
+		[   a dsp2spin:PropertyConstraints_PropertyListConstraint ] ,
+		#   Sub-Property Constraint [done]
+		[   a dsp2spin:PropertyConstraints_Sub-PropertyConstraint ] .
+		
+dsp:DescriptionTemplate
+	spin:constraint 
+		#   Property List Constraint [done]
+		[   a dsp2spin:PropertyConstraints_PropertyListConstraint_2 ] .
 		
 # -----
 
@@ -96,18 +96,18 @@ owl:Thing
 
 owl:Thing
 	spin:constraint 
-		# Literal List Constraint
-		[   a dsp:LiteralValueConstraints_LiteralListConstraint ] ,
-		# Literal Language Constraint
-		[   a dsp:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory ] ,
-		[   a dsp:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed ] ,
-		# Literal Language List Constraint
-		[   a dsp:LiteralValueConstraints_LiteralLanguageListConstraint ] ,
-#		[   a dsp:LiteralValueConstraints_LiteralLanguageListConstraint_Testing ] ,
-		# Syntax Encoding Scheme Constraint
-#		[   a dsp:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory ] ,
-		# Syntax Encoding Scheme List Constraint
-		[   a dsp:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint ] .
+		#   Literal List Constraint
+		[   a dsp2spin:LiteralValueConstraints_LiteralListConstraint ] ,
+		#   Literal Language Constraint
+		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory ] ,
+		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed ] ,
+		#   Literal Language List Constraint
+		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint ] ,
+#		[   a dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint_Testing ] ,
+		#   Syntax Encoding Scheme Constraint
+#		[   a dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory ] ,
+		#   Syntax Encoding Scheme List Constraint
+		[   a dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint ] .
 		
 # -----
 	
@@ -117,7 +117,7 @@ owl:Thing
 		
 
 # ---------------
-# Description Templates - Identifier
+# Description Templates - Identifier [done]
 
 
 # Summary: A string that can be used in a Value Constraint to reference a description template that applies to the value resource. 
@@ -125,8 +125,7 @@ owl:Thing
 # Default: N/A 
 
 # --> RDF: resource URI
-# --> no associated constraint 
-
+# --> no constraint in RDF  
 
 # -----
 
@@ -139,7 +138,7 @@ owl:Thing
 # Default: "both" 
 # Conditions:
 # - If standalone is "yes", a matching description may not be a description of value occurring elsewhere in the DSP. [done]
-# - If standalone is "no", a matching description *must* be a description of value occurring elsewhere in the DSP.
+# - If standalone is "no", a matching description *must* be a description of value occurring elsewhere in the DSP. [done]
 # - If standalone is "both", both are allowed. [done]
 # - If this description template is referred to in a Value Constraint, standalone cannot be "yes". 
 
@@ -185,88 +184,33 @@ dsp2spin:DescriptionTemplates_Standalone_No
 			    sp:predicate rdf:type ;
 				sp:object [ sp:varName "resourceClass" ] ]
 				
-#           ?this ?property ?literal .
-#           -----
-			[   sp:subject [ sp:varName "this" ] ;
-			    sp:predicate [ sp:varName "property" ] ;
-				sp:object [ sp:varName "literal" ] ]
-				
-#           BIND ( ( datatype ( ?literal ) ) AS ?datatype ) . 
-#           -----
-			[   a sp:Bind;
-				sp:variable [ sp:varName "datatype" ];
-				sp:expression [
-					a sp:datatype;
-					sp:arg1 [ sp:varName "literal" ] ] ] 
-				
-#           FILTER ( ?property != rdf:type ) .
-			[   a sp:Filter ;
-				sp:expression [ 
-					a sp:ne;
-				    sp:arg1 [ sp:varName "property" ] ;
-					sp:arg2 rdf:type ] ]
-				
 #		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
 #           -----
             [   sp:subject [ sp:varName "descriptionTemplate" ] ;
 			    sp:predicate rdf:type ;
 				sp:object dsp:DescriptionTemplate ]
-				
+			
+#           ?descriptionTemplate dsp:standalone "false"^^xsd:boolean .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:standalone ;
+				sp:object "false"^^xsd:boolean ]
+			
 #           ?descriptionTemplate dsp:resourceClass ?resourceClass .
 #           -----
 			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
 			    sp:predicate dsp:resourceClass ;
 				sp:object [ sp:varName "resourceClass" ] ]
-				
-#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
-#           -----
-			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
-			    sp:predicate dsp:statementTemplate ;
-				sp:object [ sp:varName "statementTemplate" ] ]
 
-#           ?statementTemplate dsp:property ?property .
-#           -----
-			[   sp:subject [ sp:varName "statementTemplate" ] ;
-			    sp:predicate dsp:property ;
-				sp:object [ sp:varName "property" ] ]
-				
-#           ?statementTemplate dsp:literalConstraint ?literalConstraint .
-#           -----
-			[   sp:subject [ sp:varName "statementTemplate" ] ;
-			    sp:predicate dsp:literalConstraint ;
-				sp:object [ sp:varName "literalConstraint" ] ]
-				
-#           FILTER EXISTS { ?literalConstraint dsp:syntaxEncosingScheme ?ses . }
-#           -----	
-			[   a sp:Filter ;
-                sp:expression [ 
-					a sp:exists ;
-                    sp:elements ( 
-						[   sp:subject [ sp:varName "literalConstraint" ] ;
-                            sp:predicate dsp:syntaxEncodingScheme ;
-                            sp:object [ sp:varName "ses" ] ] ) ] ]
-
-#           FILTER NOT EXISTS { ?literalConstraint dsp:syntaxEncosingScheme ?datatype . }
+#           FILTER NOT EXISTS { ?s ?p ?this . }
 #           -----
 			[   a sp:Filter ;
                 sp:expression [ 
 					a sp:notExists ;
                     sp:elements ( 
-						[   sp:subject [ sp:varName "literalConstraint" ] ;
-                            sp:predicate dsp:syntaxEncodingScheme ;
-                            sp:object [ sp:varName "datatype" ] ] ) ] ]
-
-#    		testing
-#           -----
-#			[   a sp:Bind;
-#				sp:variable [ sp:varName "violationMessage" ];
-#				sp:expression [ 
-#					a fn:concat; 
-#					sp:arg1 "literal: " ;
-#					sp:arg2 [ sp:varName "literal" ] ;
-#					sp:arg3 " | datatype: " ;
-#					sp:arg4 [ sp:varName "datatype" ] ;
-#					sp:arg5 " )" ] ] ) ].
+						[   sp:subject [ sp:varName "s" ] ;
+                            sp:predicate [ sp:varName "p" ] ;
+                            sp:object [ sp:varName "this" ] ] ) ] ]
 
 #    		BIND ( ... ) AS ?violationMessage ) . }
 #           -----
@@ -274,11 +218,10 @@ dsp2spin:DescriptionTemplates_Standalone_No
 				sp:variable [ sp:varName "violationMessage" ];
 				sp:expression [ 
 					a fn:concat; 
-					sp:arg1 "Syntax encoding schemes ( " ;
-					sp:arg2 [ sp:varName "datatype" ] ;
-					sp:arg3 " ) not allowed for the literal ( " ;
-					sp:arg4 [ sp:varName "literal" ] ;
-					sp:arg5 " )" ] ] ) ].
+					sp:arg1 "description matching the template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " ) is not allowed to occur standalone, i.e. without being the value of a property" ;
+					sp:arg4 " )" ] ] ) ].
 
 # -----
 
@@ -293,7 +236,7 @@ dsp2spin:DescriptionTemplates_Standalone_No
 
 # The minimum number of times this kind of description must appear in the Description Set. 
 # -----
-dsp:DescriptionTemplates_MinimumOccurrenceConstraint_1
+dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_1
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -380,7 +323,7 @@ dsp:DescriptionTemplates_MinimumOccurrenceConstraint_1
 					
 # dsp:minOccur <= dsp:maxOccur
 # -----
-dsp:DescriptionTemplates_MinimumOccurrenceConstraint_2
+dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_2
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -458,7 +401,7 @@ dsp:DescriptionTemplates_MinimumOccurrenceConstraint_2
 
 # The maximum number of times this kind of description is allowed to appear in the Description Set. 
 # -----
-dsp:DescriptionTemplates_MaximumOccurrenceConstraint
+dsp2spin:DescriptionTemplates_MaximumOccurrenceConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -546,7 +489,7 @@ dsp:DescriptionTemplates_MaximumOccurrenceConstraint
 # -----
 
 # ---------------
-# Description Templates - Resource Class Membership Constraint
+# Description Templates - Resource Class Membership Constraint [done]
 
 
 # Summary: Classes that the resource may be an instance of 
@@ -554,8 +497,7 @@ dsp:DescriptionTemplates_MaximumOccurrenceConstraint
 # Default: no constraint 
 # Conditions: if given, the resource must be an instance of one of the given classes. 
 
-# -----
-
+# --> no constraint needed
 
 # -----
 
@@ -570,7 +512,7 @@ dsp:DescriptionTemplates_MaximumOccurrenceConstraint
 
 # The minimum number of times this kind of statement must appear in the enclosing Description. 
 # -----
-dsp:StatementTemplates_MinimumOccurrenceConstraint_1
+dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_1
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -670,7 +612,7 @@ dsp:StatementTemplates_MinimumOccurrenceConstraint_1
 
 # dsp:minOccur <= dsp:maxOccur
 # -----
-dsp:StatementTemplates_MinimumOccurrenceConstraint_2
+dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_2
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -760,7 +702,7 @@ dsp:StatementTemplates_MinimumOccurrenceConstraint_2
 
 # The maximum number of times this kind of statement is allowed to appear in the enclosing Description. 
 # -----
-dsp:StatementTemplates_MaximumOccurrenceConstraint
+dsp2spin:StatementTemplates_MaximumOccurrenceConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -861,7 +803,7 @@ dsp:StatementTemplates_MaximumOccurrenceConstraint
 # -----
 
 # ---------------
-# Statement Templates - Type Constraint
+# Statement Templates - Type Constraint [done]
 
 
 # Summary: The type of value surrogate (literal/non-literal) that is allowed in this Statement. 
@@ -875,16 +817,15 @@ dsp:StatementTemplates_MaximumOccurrenceConstraint
 # -----
 
 # ---------------
-# Property Constraints - Property List Constraint
+# Property Constraints - Property List Constraint [done] 
 
 
-# Summary: A set of properties that are allowed in this statement template. [done]
-# Allowed values: a list of property URIs [done]
-# Default: N/A [done]
-# Conditions: cannot occur together with a sub-property constraint [todo]
+# Summary: A set of properties that are allowed in this statement template. 
+# Allowed values: a list of property URIs 
+# Default: N/A 
+# Conditions: cannot occur together with a sub-property constraint
 
-# -----
-dsp:PropertyConstraints_PropertyListConstraint
+dsp2spin:PropertyConstraints_PropertyListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -954,6 +895,16 @@ dsp:PropertyConstraints_PropertyListConstraint
 			    sp:predicate dsp:statementTemplate ;
 				sp:object [ sp:varName "statementTemplate" ] ]
 				
+#			FILTER EXISTS { ?statementTemplate dsp:property ?p . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "statementTemplate" ] ;
+                            sp:predicate dsp:property ;
+                            sp:object [ sp:varName "p" ] ] ) ] ]
+				
 #			FILTER NOT EXISTS { ?statementTemplate dsp:property ?property . }
 #           -----
 			[   a sp:Filter ;
@@ -975,21 +926,205 @@ dsp:PropertyConstraints_PropertyListConstraint
 					sp:arg3 " not allowed for description template ( " ;
 					sp:arg4 [ sp:varName "descriptionTemplate" ] ;
 					sp:arg5 " )" ] ] ) ].
+	
+# A property list constraint cannot occur together with a sub-property constraint	
+dsp2spin:PropertyConstraints_PropertyListConstraint_2
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#			FILTER EXISTS { ?statementTemplate dsp:property ?p1 . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "statementTemplate" ] ;
+                            sp:predicate dsp:property ;
+                            sp:object [ sp:varName "p1" ] ] ) ] ]
+				
+#			FILTER EXISTS { ?statementTemplate dsp:subPropertyOf ?p2 . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "statementTemplate" ] ;
+                            sp:predicate dsp:subPropertyOf ;
+                            sp:object [ sp:varName "p2" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "A property list constraint cannot occur together with a sub-property constraint" ;
+					sp:arg2 " | description template: " ;
+					sp:arg3 [ sp:varName "this" ] ;
+					sp:arg4 " )" ] ] ) ].
 
 # -----
 
 # ---------------
-# Property Constraints - Sub-Property Constraint
+# Property Constraints - Sub-Property Constraint [done] 
 
 
-# Summary: Only sub-properties of the given property are allowed in this statement template.  
+# Summary: Only sub-properties of the given property are allowed in this statement template. 
 # Note that the given property is included in this list (all properties are sub-properties of themselves). 
-# Allowed values: a property URI 
+# Allowed values: a property URI
 # Default: N/A 
 # Conditions: cannot occur together with a property list constraint 
 
-# -----
+# dsp:minOccur
+# dsp:maxOccur
 
+dsp2spin:PropertyConstraints_Sub-PropertyConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?subProperty ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "subProperty" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?subProperty != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "subProperty" ] ;
+					sp:arg2 rdf:type ] ]
+				
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:subPropertyOf ?superProperty .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:subPropertyOf ;
+				sp:object [ sp:varName "superProperty" ] ]
+				
+#           FILTER ( ?subProperty != ?superProperty ) .
+#           -----
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+					sp:arg1 [ sp:varName "subProperty" ] ;
+					sp:arg2 [ sp:varName "superProperty" ] ] ]
+				
+#           FILTER NOT EXISTS { ?subProperty rdfs:subPropertyOf ?superProperty }
+#           -----
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:notExists ;
+					sp:elements ( 
+						[   sp:subject [ sp:varName "subProperty" ] ;
+							sp:predicate rdfs:subPropertyOf ;
+							sp:object [ sp:varName "superProperty" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 [ sp:varName "subProperty" ] ;
+					sp:arg2 " is not a sub-property of the super-property ( " ;
+					sp:arg3 [ sp:varName "superProperty" ] ;
+					sp:arg4 " ) defined in the description template ( " ;
+					sp:arg5 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg6 " )" ] ] ) ].
 
 # -----
 
@@ -1001,7 +1136,7 @@ dsp:PropertyConstraints_PropertyListConstraint
 # Allowed values: list of literals, i.e. (string, language tag) or (string, syntax encoding scheme URI) pairs. 
 
 # -----
-dsp:LiteralValueConstraints_LiteralListConstraint
+dsp2spin:LiteralValueConstraints_LiteralListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1118,7 +1253,7 @@ dsp:LiteralValueConstraints_LiteralListConstraint
 
 # 
 # -----
-dsp:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory
+dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1232,7 +1367,7 @@ dsp:LiteralValueConstraints_LiteralLanguageConstraint_Mandatory
 					sp:arg2 [ sp:varName "literal" ] ;
 					sp:arg3 "')" ] ] ) ].
 					
-dsp:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed
+dsp2spin:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1360,7 +1495,7 @@ dsp:LiteralValueConstraints_LiteralLanguageConstraint_Disallowed
 
 # 
 # -----
-dsp:LiteralValueConstraints_LiteralLanguageListConstraint
+dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1501,7 +1636,7 @@ dsp:LiteralValueConstraints_LiteralLanguageListConstraint
 						sp:arg4 [ sp:varName "literal" ] ;
 						sp:arg5 " )" ] ] ) ].
 					
-dsp:LiteralValueConstraints_LiteralLanguageListConstraint_Testing
+dsp2spin:LiteralValueConstraints_LiteralLanguageListConstraint_Testing
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1666,7 +1801,7 @@ dsp:LiteralValueConstraints_LiteralLanguageListConstraint_Testing
 
 # 
 # -----
-dsp:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory
+dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
@@ -1821,7 +1956,7 @@ dsp:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_Mandatory
 # Default: no constraint 
 
 
-dsp:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
+dsp2spin:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
 	spin:labelTemplate "" ;
