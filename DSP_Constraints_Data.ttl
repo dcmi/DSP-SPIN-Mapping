@@ -77,7 +77,8 @@
 				# dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence ;
 				
 				# <SyntaxEncodingScheme></SyntaxEncodingScheme>
-				# dsp:syntaxEncodingScheme ... . ] ] ] .
+				# dsp:syntaxEncodingScheme ... . 
+	] ] ] .
 	
 # <DescriptionTemplate ID="person" standalone="no">
 :person
@@ -117,7 +118,8 @@
 			dsp:syntaxEncodingSchemeOccurrence ""^^dsp:occurrence 
 			
 			# <SyntaxEncodingScheme></SyntaxEncodingScheme>
-			# dsp:syntaxEncodingScheme ... . ] ] .
+			# dsp:syntaxEncodingScheme ... .
+	] ] .
 
 # -----
 
@@ -627,4 +629,69 @@
 		foaf:name "2"^^xsd:nonNegativeInteger .
 #		foaf:name "3"^^xsd:integer .
 
+# -----
+
+# ---------------
+# Non-Literal Value Constraints - Description Template Reference
+
+
+	# does value description template correspond to the value desctription template defined in the subject description template
+	# -----
+	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_DescriptionTemplateReference_C1 ; 
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_DescriptionTemplateReference_DT2 ] ] .
+	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT2
+#	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT3 # comment out to violate constraint
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_DescriptionTemplateReference_C2 .
+	:Non-LiteralValueConstraints_DescriptionTemplateReference_I1
+		a :Non-LiteralValueConstraints_DescriptionTemplateReference_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_DescriptionTemplateReference_I2 .
+	:Non-LiteralValueConstraints_DescriptionTemplateReference_I2
+		a :Non-LiteralValueConstraints_DescriptionTemplateReference_C2 , owl:Thing .
+
+# -----
+
+# ---------------
+# Non-Literal Value Constraints - Class Membership Constraint
+
+
+	:Non-LiteralValueConstraints_ClassMembershipConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_ClassMembershipConstraint_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_ClassMembershipConstraint_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ClassMembershipConstraint_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ClassMembershipConstraint_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ClassMembershipConstraint_C4 ] ] .
+	:Non-LiteralValueConstraints_ClassMembershipConstraint_I1
+		a :Non-LiteralValueConstraints_ClassMembershipConstraint_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_ClassMembershipConstraint_I2 .	
+	:Non-LiteralValueConstraints_ClassMembershipConstraint_I2
+		a :Non-LiteralValueConstraints_ClassMembershipConstraint_C3 ; # comment to violate constraint
+		a owl:Thing .
+		
 # -----
