@@ -695,3 +695,212 @@
 		a owl:Thing .
 		
 # -----
+
+# ---------------
+# Non-Literal Value Constraints - Value URI Occurrence Constraint
+
+
+	# mandatory
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C4 ;
+				dsp:valueURIOccurrence "mandatory"^^dsp:occurrence ; 
+#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I2 ; # commented out --> constraint violation
+#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I3 ; # commented out --> constraint violation
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I4 # commented out --> constraint violation
+		] ] .
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I1
+		a :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I3 .	
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I3
+		a :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C3 , owl:Thing .
+		
+	# disallowed
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C4 ;
+				dsp:valueURIOccurrence "disallowed"^^dsp:occurrence  
+#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I2 ; # NOT commented out --> constraint violation
+#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I3 ;  # NOT commented out --> constraint violation
+#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I4  # NOT commented out --> constraint violation
+				] ] .
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I1
+		a :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I3 .	
+	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_I3
+		a :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed_C3 , owl:Thing .
+		
+# -----
+
+# ---------------
+# Non-Literal Value Constraints - Value URI List Constraint
+
+
+	:Non-LiteralValueConstraints_ValueURIListConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_ValueURIListConstraint_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_ValueURIListConstraint_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIListConstraint_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIListConstraint_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_ValueURIListConstraint_C4 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I2 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I3 ; # comment out to violate constraint
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I4 ] ] .
+	:Non-LiteralValueConstraints_ValueURIListConstraint_I1
+		a :Non-LiteralValueConstraints_ValueURIListConstraint_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_ValueURIListConstraint_I3 .	
+	:Non-LiteralValueConstraints_ValueURIListConstraint_I3
+		a :Non-LiteralValueConstraints_ValueURIListConstraint_C3 , owl:Thing .
+		
+# -----
+
+# ---------------
+# Non-Literal Value Constraints - Vocabulary Encoding Scheme Occurrence Constraint
+
+
+	# mandatory
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C4 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I2 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I3 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I4 ;
+				dsp:vocabularyEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_VES1 ; # comment out to violate constraint 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_VES2 ; # comment out to violate constraint
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_VES3 # comment out to violate constraint 
+				] ] .
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I1
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I3 .
+		dcam:memberOf dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_VES1 . # comment out to violate constraint
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_I3
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory_C3 , owl:Thing .
+		
+	# disallowed
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C4 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I2 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I3 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I4 ;
+				dsp:vocabularyEncodingSchemeOccurrence "disallowed"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_VES1 ; # comment out to violate constraint 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_VES2 ; # comment out to violate constraint
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_VES3 # comment out to violate constraint 
+				] ] .
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I1
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I3 .
+		dcam:memberOf dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_VES1 . # comment out to violate constraint
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I3
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C3 , owl:Thing .
+
+# -----
+
+# ---------------
+# Non-Literal Value Constraints - Vocabulary Encoding Scheme List Constraint
+
+
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C3 ;
+				dsp:valueClass :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C4 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I2 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I3 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I4 ;
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES1 ; # comment to violate constraint 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES2 ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES3 ] ] .
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I1
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I3 .
+		dcam:memberOf dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES1 . 
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_I3
+		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_C3 , owl:Thing .
+		
+# -----
