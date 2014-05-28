@@ -719,8 +719,8 @@
 				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C3 ;
 				dsp:valueClass :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_C4 ;
 				dsp:valueURIOccurrence "mandatory"^^dsp:occurrence ; 
-#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I2 ; # commented out --> constraint violation
-#				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I3 ; # commented out --> constraint violation
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I2 ; # commented out --> constraint violation
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I3 ; # commented out --> constraint violation
 				dsp:valueURI :Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I4 # commented out --> constraint violation
 		] ] .
 	:Non-LiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory_I1
@@ -783,7 +783,7 @@
 				dsp:valueClass :Non-LiteralValueConstraints_ValueURIListConstraint_C4 ;
 				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
 				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I2 ; 
-				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I3 ; # comment out to violate constraint
+				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I3 ; # commented out --> constraint violation
 				dsp:valueURI :Non-LiteralValueConstraints_ValueURIListConstraint_I4 ] ] .
 	:Non-LiteralValueConstraints_ValueURIListConstraint_I1
 		a :Non-LiteralValueConstraints_ValueURIListConstraint_C1 , owl:Thing ;

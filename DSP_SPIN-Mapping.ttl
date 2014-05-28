@@ -121,9 +121,11 @@ owl:Thing
 		[   a dsp2spin:NonLiteralValueConstraints_DescriptionTemplateReference ] ,
 		#   Class Membership Constraint [done]
 		[   a dsp2spin:NonLiteralValueConstraints_ClassMembershipConstraint ] ,
-		#   Value URI Occurrence Constraint
+		#   Value URI Occurrence Constraint [done]
 		[   a dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Mandatory ] ,
-		[   a dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed ] .
+		[   a dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed ] ,
+		#   Value URI List Constraint [done]
+		[   a dsp2spin:Non-LiteralValueConstraints_ValueURIListConstraint ] .
 		
 # -----
 
@@ -2420,7 +2422,7 @@ dsp2spin:NonLiteralValueConstraints_ClassMembershipConstraint
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - Value URI Occurrence Constraint
+# Non-Literal Value Constraints - Value URI Occurrence Constraint [done]
 
 
 # Summary: Whether a value URI must be given 
@@ -2651,7 +2653,7 @@ dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - Value URI List Constraint
+# Non-Literal Value Constraints - Value URI List Constraint [done]
 
 
 # Summary: URIs that are allowed as value URIs. 
@@ -2659,9 +2661,120 @@ dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed
 # Default: no constraint 
 # Conditions: If a value URI is given, it must be taken from this list. Cannot be specified if value occurrence is "disallowed"  
 
-# 
-# -----
 
+dsp2spin:Non-LiteralValueConstraints_ValueURIListConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+				
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#			FILTER EXISTS { ?nonLiteralConstraint dsp:valueURI ?valueURI . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+                            sp:predicate dsp:valueURI ;
+                            sp:object [ sp:varName "valueURI" ] ] ) ] ]
+				
+#			FILTER NOT EXISTS { ?nonLiteralConstraint dsp:valueURI ?object . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:notExists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "?nonLiteralConstraint" ] ;
+                            sp:predicate dsp:valueURI ;
+                            sp:object [ sp:varName "object" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "value URI ( " ;
+					sp:arg2 [ sp:varName "this" ] ;
+					sp:arg3 " not allowed for description template ( " ;
+					sp:arg4 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg5 " )" ] ] ) ].
 
 # -----
 
