@@ -462,12 +462,12 @@
 # ---------------
 # Literal Value Constraints - Literal List Constraint
 
-
-	:LiteralValueConstraints_LiteralListConstraint
+	# -----
+	:LiteralValueConstraints_LiteralListConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_ResourceClass_1 ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:LiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -482,14 +482,106 @@
 				] ] .
 	:LiteralValueConstraints_LiteralListConstraint_I1
 		a owl:Thing ;
-		a :LiteralValueConstraints_LiteralListConstraint_ResourceClass_1 ;
-#		foaf:name "XXXXX" ; # different literal
+		a :LiteralValueConstraints_LiteralListConstraint_C1 ;
+#		foaf:name "XXXXX" ; # different literal # NOT commented --> constraint violation
 		foaf:name "literal 1"@en ;
-#		foaf:name "literal 1"@de ; # different language tag
+#		foaf:name "literal 1"@de ; # different language tag # NOT commented --> constraint violation
 		foaf:name "literal 2"@de ;
 		foaf:name "3"^^xsd:string ;
-#		foaf:name "3"^^xsd:nonNegativeInteger ; # different datatype
+#		foaf:name "3"^^xsd:nonNegativeInteger ; # different datatype # NOT commented --> constraint violation
 		foaf:name "4"^^xsd:nonNegativeInteger .
+		
+	# As a literal list constraint is given, no literal language constraint can be given
+	# -----
+	:LiteralValueConstraints_LiteralListConstraint_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_C2 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "20"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"@en ;
+				dsp:literal "2"^^xsd:string 
+#				dsp:languageOccurrence "optional"^^dsp:occurrence # NOT commented --> constraint violation
+			] ] .
+	:LiteralValueConstraints_LiteralListConstraint_I2
+		a :LiteralValueConstraints_LiteralListConstraint_C2 , owl:Thing ;
+		foaf:name "1"@en ;
+		foaf:name "2"^^xsd:string .
+		
+	# As a literal list constraint is given, no literal language list constraint can be given
+	# -----
+	:LiteralValueConstraints_LiteralListConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "20"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"@en ;
+				dsp:literal "2"^^xsd:string 
+#				dsp:language "en"^^xsd:language # NOT commented --> constraint violation
+			] ] .
+	:LiteralValueConstraints_LiteralListConstraint_I3
+		a :LiteralValueConstraints_LiteralListConstraint_C3 , owl:Thing ;
+		foaf:name "1"@en ;
+		foaf:name "2"^^xsd:string .
+		
+	# As a literal list constraint is given, no syntax encoding scheme constraint can be given
+	# -----
+	:LiteralValueConstraints_LiteralListConstraint_DT4
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_C4 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "20"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"@en ;
+				dsp:literal "2"^^xsd:string 
+#				dsp:syntaxEncodingSchemeOccurrence "optional"^^dsp:occurrence # NOT commented --> constraint violation
+			] ] .
+	:LiteralValueConstraints_LiteralListConstraint_I4
+		a :LiteralValueConstraints_LiteralListConstraint_C4 , owl:Thing ;
+		foaf:name "1"@en ;
+		foaf:name "2"^^xsd:string .
+		
+	# As a literal list constraint is given, no syntax encoding scheme list constraint can be given
+	# -----
+	:LiteralValueConstraints_LiteralListConstraint_DT5
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralListConstraint_C5 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "20"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:literal "1"@en ;
+				dsp:literal "2"^^xsd:string 
+#				dsp:syntaxEncodingScheme xsd:string # NOT commented --> constraint violation
+			] ] .
+	:LiteralValueConstraints_LiteralListConstraint_I5
+		a :LiteralValueConstraints_LiteralListConstraint_C5 , owl:Thing ;
+		foaf:name "1"@en ;
+		foaf:name "2"^^xsd:string .
 		
 # -----
 
@@ -499,11 +591,11 @@
 
 	# mandatory
 	# -----
-	:LiteralValueConstraints_LiteralLanguageConstraint_1
+	:LiteralValueConstraints_LiteralLanguageConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_1 ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:LiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -511,23 +603,41 @@
 			dsp:property foaf:name ;
 			dsp:literalConstraint [
 				a dsp:LiteralConstraint ;
-				dsp:literal "literal" ;
-				dsp:literal "literal"@en ;
-				dsp:languageOccurrence "mandatory"^^dsp:occurrence 
-				] ] .
+				dsp:languageOccurrence "mandatory"^^dsp:occurrence ] ] .
 	:LiteralValueConstraints_LiteralLanguageConstraint_I1
 		a owl:Thing ;
-		a :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_1 ;
-#		foaf:name "literal" .
+		a :LiteralValueConstraints_LiteralLanguageConstraint_C1 ;
+#		foaf:name "literal" ; # NOT commented --> constraint violation
+		foaf:name "literal"@en .
+		
+	# if "mandatory", syntax encoding schemes are automatically disallowed 
+	# -----
+	:LiteralValueConstraints_LiteralLanguageConstraint_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_C2 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:languageOccurrence "mandatory"^^dsp:occurrence ] ] .
+	:LiteralValueConstraints_LiteralLanguageConstraint_I2
+		a owl:Thing ;
+		a :LiteralValueConstraints_LiteralLanguageConstraint_C2 ;
+#		foaf:name "literal"^^xsd:string ; # NOT commented --> constraint violation
 		foaf:name "literal"@en .
 		
 	# disallowed
 	# -----
-	:LiteralValueConstraints_LiteralLanguageConstraint_2
+	:LiteralValueConstraints_LiteralLanguageConstraint_DT3
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_2 ;
+		dsp:resourceClass :LiteralValueConstraints_LiteralLanguageConstraint_C3 ;
 		dsp:statementTemplate [
 			a dsp:LiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -535,14 +645,11 @@
 			dsp:property foaf:name ;
 			dsp:literalConstraint [
 				a dsp:LiteralConstraint ;
-				dsp:literal "literal" ;
-				dsp:literal "literal"@en ;
-				dsp:languageOccurrence "disallowed"^^dsp:occurrence 
-				] ] .
-	:LiteralValueConstraints_LiteralLanguageConstraint_I2
+				dsp:languageOccurrence "disallowed"^^dsp:occurrence ] ] .
+	:LiteralValueConstraints_LiteralLanguageConstraint_I3
 		a owl:Thing ;
-		a :LiteralValueConstraints_LiteralLanguageConstraint_ResourceClass_2 ;
-#		foaf:name "literal"@en .
+		a :LiteralValueConstraints_LiteralLanguageConstraint_C3 ;
+#		foaf:name "literal"@en ; # NOT commented --> constraint violation
 		foaf:name "literal" .
 
 # -----
@@ -563,18 +670,14 @@
 			dsp:property foaf:name ;
 			dsp:literalConstraint [
 				a dsp:LiteralConstraint ;
-				dsp:literal "literal"@en ;
-				dsp:literal "literal"@de ;
-				dsp:literal "literal"@fr ;
 				dsp:language "en"^^xsd:language ;
-				dsp:language "de"^^xsd:language 
-				] ] .
+				dsp:language "de"^^xsd:language ] ] .
 	:LiteralValueConstraints_LiteralLanguageListConstraint_I1
 		a :LiteralValueConstraints_LiteralLanguageListConstraint_ResourceClass_1 , owl:Thing ;
+#		foaf:name "literal"@fr ; # NOT commented --> constraint violation
 		foaf:name "literal"@en ;
 		foaf:name "literal"@de .
-#		foaf:name "literal"@fr .
-
+		
 # -----
 
 # ---------------
@@ -583,11 +686,11 @@
 
 	# mandatory
 	# -----
-	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_1
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_ResourceClass_1 ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:LiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -595,13 +698,63 @@
 			dsp:property foaf:name ;
 			dsp:literalConstraint [
 				a dsp:LiteralConstraint ;
-				dsp:literal "1"^^xsd:string ;
-				dsp:literal "2"@en ;
-				dsp:syntaxEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ] ] .
+				dsp:syntaxEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ;
+				dsp:syntaxEncodingScheme xsd:string ; # commented --> constraint violation
+				dsp:syntaxEncodingScheme xsd:nonNegativeInteger # commented --> constraint violation
+			] ] .
 	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_I1
-		a :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_ResourceClass_1 , owl:Thing ;
-		foaf:name "1"^^xsd:string ;
-		foaf:name "2"@en .
+		a :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C1 , owl:Thing ;
+		foaf:name "1" ; 
+		foaf:name "2"^^xsd:string ;
+		foaf:name "3"^^xsd:nonNegativeInteger .
+		
+	# disallowed
+	# -----
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C2 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:syntaxEncodingSchemeOccurrence "disallowed"^^dsp:occurrence 
+#				dsp:syntaxEncodingScheme xsd:string ; # NOT commented --> constraint violation
+#				dsp:syntaxEncodingScheme xsd:nonNegativeInteger # NOT commented --> constraint violation
+			] ] .
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_I2
+		a :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C2 , owl:Thing ;
+		foaf:name "1" ; 
+		foaf:name "2"^^xsd:string ;
+		foaf:name "3"^^xsd:nonNegativeInteger .
+		
+	# if "mandatory", language tags are automatically disallowed
+	# -----
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:name ;
+			dsp:literalConstraint [
+				a dsp:LiteralConstraint ;
+				dsp:syntaxEncodingSchemeOccurrence "mandatory"^^dsp:occurrence ;
+				dsp:syntaxEncodingScheme xsd:string ; 
+				dsp:syntaxEncodingScheme xsd:nonNegativeInteger 
+			] ] .
+	:LiteralValueConstraints_SyntaxEncodingSchemeConstraint_I3
+		a :LiteralValueConstraints_SyntaxEncodingSchemeConstraint_C3 , owl:Thing ;
+#		foaf:name "1"@en ; # NOT commented --> constraint violation
+		foaf:name "2"^^xsd:string ;
+		foaf:name "3"^^xsd:nonNegativeInteger .
 
 # -----
 
@@ -609,11 +762,11 @@
 # Literal Value Constraints - Syntax Encoding Scheme List Constraint
 
 
-	:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint
+	:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_ResourceClass_1 ;
+		dsp:resourceClass :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:LiteralStatementTemplate ;
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
@@ -621,16 +774,14 @@
 			dsp:property foaf:name ;
 			dsp:literalConstraint [
 				a dsp:LiteralConstraint ;
-				dsp:literal "1"^^xsd:string ;
-				dsp:literal "2"^^xsd:nonNegativeInteger ;
-				dsp:literal "3"^^xsd:integer ;
+				dsp:syntaxEncodingSchemeOccurrence "optional"^^dsp:occurrence ;
 				dsp:syntaxEncodingScheme xsd:string ;
 				dsp:syntaxEncodingScheme xsd:nonNegativeInteger ] ] .
 	:LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_I1
-		a :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_ResourceClass_1 , owl:Thing ;
+		a :LiteralValueConstraints_SyntaxEncodingSchemeListConstraint_C1 , owl:Thing ;
 		foaf:name "1"^^xsd:string ;
 		foaf:name "2"^^xsd:nonNegativeInteger .
-#		foaf:name "3"^^xsd:integer .
+#		foaf:name "3"^^xsd:integer . # NOT commented --> constraint violation
 
 # -----
 
