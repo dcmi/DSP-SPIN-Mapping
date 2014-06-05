@@ -274,26 +274,30 @@
 
 	# The minimum number of times this kind of description must appear in the Description Set. 
 	# -----
-	:DescriptionTemplate_MinimumOccurrenceConstraint_1
+	:DescriptionTemplate_MinimumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "2"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
-		
+		dsp:resourceClass :DescriptionTemplate_MinimumOccurrenceConstraint_C1 .
 	:DescriptionTemplate_MinimumOccurrenceConstraint_I1
-		a owl:Thing ;
-		a :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
-		
+		a :DescriptionTemplate_MinimumOccurrenceConstraint_C1 , owl:Thing .
 	:DescriptionTemplate_MinimumOccurrenceConstraint_I2
-		a owl:Thing ;
-		a :DescriptionTemplate_MinimumOccurrenceConstraint_ResourceClass1 .
+		a :DescriptionTemplate_MinimumOccurrenceConstraint_C1 , owl:Thing .
 
 	# dsp:minOccur <= dsp:maxOccur
 	# -----
-#	:DescriptionTemplate_MinimumOccurrenceConstraint_2
+#	:DescriptionTemplate_MinimumOccurrenceConstraint_DT2
 #		a dsp:DescriptionTemplate ;
 #		dsp:minOccur "4"^^xsd:nonNegativeInteger ;
 #		dsp:maxOccur "3"^^xsd:nonNegativeInteger .
+
+	# Allowed values: non-negative integer
+	# -----
+	:DescriptionTemplate_MinimumOccurrenceConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "2"^^xsd:nonNegativeInteger ;
+#		dsp:minOccur "2" ; # NOT commented --> constraint violation
+		dsp:maxOccur "3"^^xsd:nonNegativeInteger .
 
 # -----
 
@@ -303,19 +307,33 @@
 
 	# The maximum number of times this kind of description is allowed to appear in the Description Set. 
 	# -----
-	:DescriptionTemplate_MaximumOccurrenceConstraint
+	:DescriptionTemplate_MaximumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
-		dsp:resourceClass :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
-		
+		dsp:resourceClass :DescriptionTemplate_MaximumOccurrenceConstraint_C1 .
 	:DescriptionTemplate_MaximumOccurrenceConstraint_I1
 		a owl:Thing ;
-		a :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
-		
+		a :DescriptionTemplate_MaximumOccurrenceConstraint_C1 .
 #	:DescriptionTemplate_MaximumOccurrenceConstraint_I2
 #		a owl:Thing ;
-#		a :DescriptionTemplate_MaximumOccurrenceConstraint_ResourceClass_1 .
+#		a :DescriptionTemplate_MaximumOccurrenceConstraint_C1 .
+
+	# Allowed values: non-negative integer or "infinity" 
+	# -----
+	:DescriptionTemplate_MaximumOccurrenceConstraint_DT2
+		a dsp:DescriptionTemplate ;
+#		dsp:maxOccur "3" ; # NOT commented --> constraint violation
+		dsp:maxOccur "3"^^xsd:nonNegativeInteger ;
+		dsp:minOccur "2"^^xsd:nonNegativeInteger .
+		
+	# Allowed values: non-negative integer or "infinity" 
+	# -----
+	:DescriptionTemplate_MaximumOccurrenceConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:maxOccur "infinity"^^xsd:string ; 
+#		dsp:maxOccur "3" ; # NOT commented --> constraint violation
+		dsp:minOccur "2"^^xsd:nonNegativeInteger .
 
 # -----
 
