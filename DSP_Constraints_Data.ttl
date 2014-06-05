@@ -349,25 +349,38 @@
 
 	# The minimum number of times this kind of statement must appear in the enclosing Description. 
 	# -----
-	:StatementTemplate_MinimumOccurrenceConstraint_1
+	:StatementTemplate_MinimumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
-		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_1 ;
+		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
 			dsp:minOccur "2"^^xsd:nonNegativeInteger ;
 			dsp:property dcterms:creator ] .
 	:StatementTemplate_MinimumOccurrenceConstraint_I1
 		a owl:Thing ;
-		a :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_1 ;
+		a :StatementTemplate_MinimumOccurrenceConstraint_C1 ;
 		dcterms:creator :StatementTemplate_MinimumOccurrenceConstraint_I2 ;
 		dcterms:creator :StatementTemplate_MinimumOccurrenceConstraint_I3 .
 		
 	# dsp:minOccur <= dsp:maxOccur
-	:StatementTemplate_MinimumOccurrenceConstraint_2
+	# -----
+	:StatementTemplate_MinimumOccurrenceConstraint_DT2
 		a dsp:DescriptionTemplate ;
-		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_ResourceClass_2 ;
+		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_C2 ;
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "2"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:creator ] .
+			
+	# Allowed values non-negative integer
+	# -----
+	:StatementTemplate_MinimumOccurrenceConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MinimumOccurrenceConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+#			dsp:minOccur "1" ; # NOT commented --> constraint violation
 			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
 			dsp:maxOccur "2"^^xsd:nonNegativeInteger ;
 			dsp:property dcterms:creator ] .
@@ -380,18 +393,42 @@
 
 	# The maximum number of times this kind of statement is allowed to appear in the enclosing Description.
 	# -----
-	:StatementTemplate_MaximumOccurrenceConstraint
+	:StatementTemplate_MaximumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
-		dsp:resourceClass :StatementTemplate_MaximumOccurrenceConstraint_ResourceClass1 ;
+		dsp:resourceClass :StatementTemplate_MaximumOccurrenceConstraint_C1 ;
 		dsp:statementTemplate [
 			a dsp:NonLiteralStatementTemplate ;
 			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
 			dsp:property dcterms:creator ] .
 	:StatementTemplate_MaximumOccurrenceConstraint_I1
 		a owl:Thing ;
-		a :StatementTemplate_MaximumOccurrenceConstraint_ResourceClass1 ;
+		a :StatementTemplate_MaximumOccurrenceConstraint_C1 ;
 #		dcterms:creator :StatementTemplate_MaximumOccurrenceConstraint_I2 ;
 		dcterms:creator :StatementTemplate_MaximumOccurrenceConstraint_I3 .
+		
+	# Allowed values non-negative integer
+	# -----
+	:StatementTemplate_MaximumOccurrenceConstraint_DT2
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MaximumOccurrenceConstraint_C2 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+#			dsp:maxOccur "2" ; # NOT commented --> constraint violation
+			dsp:maxOccur "2"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:creator ] .
+			
+	# Allowed values non-negative integer
+	# -----
+	:StatementTemplate_MaximumOccurrenceConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:resourceClass :StatementTemplate_MaximumOccurrenceConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+#			dsp:maxOccur "2" ; # NOT commented --> constraint violation
+			dsp:maxOccur "infinity"^^xsd:string ;
+			dsp:property dcterms:creator ] .
 
 # -----
 

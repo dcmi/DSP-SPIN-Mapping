@@ -55,21 +55,23 @@ dsp:DescriptionTemplate
 # -----
 
 # ---------------
-# Statement Templates
+# Statement Templates [done]
 
 
 owl:Thing
 	spin:constraint 
-		#   Minimum occurrence constraint
+#[done]	#   Minimum occurrence constraint
 		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_1 ] ,
-		#   Maximum occurrence constraint
+#[done]	#   Maximum occurrence constraint
 		[   a dsp2spin:StatementTemplates_MaximumOccurrenceConstraint ] .
 #[done]	#   Type Constraint
 
 dsp:DescriptionTemplate
 	spin:constraint 
 #[done]	#   Minimum Occurrence Constraint
-		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_2 ] .
+		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_2 ] ,
+		[   a dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_AllowedValues ] ,
+		[   a dsp2spin:StatementTemplates_MaximumOccurrenceConstraint_AllowedValues ] .
 		
 # -----
 
@@ -557,12 +559,12 @@ dsp2spin:DescriptionTemplates_MaximumOccurrenceConstraint
 # -----
 
 # ---------------
-# Statement Templates - Minimum occurrence constraint
+# Statement Templates - Minimum occurrence constraint [done]
 
 
 # Summary: The minimum number of times this kind of statement must appear in the enclosing Description. 
-# Allowed values non-negative integer [todo]
-# Default: 0 [todo]
+# Allowed values non-negative integer
+# Default: 0 --> no constraint needed
 # Conditions: must be equal or less than the Maximum occurrence 
 
 # The minimum number of times this kind of statement must appear in the enclosing Description. 
@@ -663,7 +665,7 @@ dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_1
 					sp:arg2 [ sp:varName "cardinalityStatement" ] ;
 					sp:arg3 " ) < minOccur statement ( " ;
 					sp:arg4 [ sp:varName "minOccurStatement" ] ;
-					sp:arg5 " )" ] ] ) ].			
+					sp:arg5 " )" ] ] ) ].						
 
 # dsp:minOccur <= dsp:maxOccur
 # -----
@@ -744,15 +746,98 @@ dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_2
 					sp:arg4 [ sp:varName "maxOccurStatement" ] ;
 					sp:arg5 " )" ] ] ) ].
 					
+# Allowed values non-negative integer
+# -----
+dsp2spin:StatementTemplates_MinimumOccurrenceConstraint_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:minOccur ?minOccurStatement .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:minOccur ;
+				sp:object [ sp:varName "minOccurStatement" ] ]
+				
+#           BIND( ( IF( sp:isNumeric ( ?minOccurStatement ), "true"^^xsd:boolean, "false"^^xsd:boolean ) ) AS ?isNumeric ) .
+#           FILTER ( ?isNumeric = "false"^^xsd:boolean ) . 
+#           -----	
+			[   a sp:Bind ;
+				sp:expression [
+					a sp:if ;
+					sp:arg1 [ 
+						a sp:isNumeric ;
+						sp:arg1 [ sp:varName "minOccurStatement"^^xsd:string ] ] ;
+					sp:arg2 "true"^^xsd:boolean ;
+					sp:arg3 "false"^^xsd:boolean ] ;
+				sp:variable [ sp:varName "isNumeric"^^xsd:boolean ] ] 
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:eq ;
+					sp:arg1 [ sp:varName "isNumeric"^^xsd:boolean ] ;
+					sp:arg2 "false"^^xsd:boolean ] ] 
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The minOccur statement ( " ;
+					sp:arg2 [ sp:varName "minOccurStatement" ] ;
+					sp:arg3 " ) is not a non-negative integer as specified by the description template ( " ;
+					sp:arg4 [ sp:varName "this" ] ;
+					sp:arg5 " )" ] ] ) ].			
+					
 # -----
 
 # ---------------
-# Statement Templates - Maximum occurrence constraint
+# Statement Templates - Maximum occurrence constraint [done]
 
 
 # Summary: The maximum number of times this kind of statement is allowed to appear in the enclosing Description. 
-# Allowed values: non-negative integer or "infinity" [todo]
-# Default: "infinity" [todo]
+# Allowed values: non-negative integer or "infinity" 
+# Default: "infinity" --> no constraint needed
 # Conditions: must be equal or greater than the Minimum occurrence  
 
 # The maximum number of times this kind of statement is allowed to appear in the enclosing Description. 
@@ -854,6 +939,97 @@ dsp2spin:StatementTemplates_MaximumOccurrenceConstraint
 					sp:arg3 " ) < maxOccur statement ( " ;
 					sp:arg4 [ sp:varName "maxOccurStatement" ] ;
 					sp:arg5 " )" ] ] ) ].
+					
+# Allowed values non-negative integer
+# -----
+dsp2spin:StatementTemplates_MaximumOccurrenceConstraint_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:maxOccur ?maxOccurStatement .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:maxOccur ;
+				sp:object [ sp:varName "maxOccurStatement" ] ]
+				
+#           BIND( ( IF( sp:isNumeric ( ?maxOccurStatement ), "true"^^xsd:boolean, "false"^^xsd:boolean ) ) AS ?isNumeric ) .
+#           -----	
+			[   a sp:Bind ;
+				sp:expression [
+					a sp:if ;
+					sp:arg1 [ 
+						a sp:isNumeric ;
+						sp:arg1 [ sp:varName "maxOccurStatement"^^xsd:string ] ] ;
+					sp:arg2 "true"^^xsd:boolean ;
+					sp:arg3 "false"^^xsd:boolean ] ;
+				sp:variable [ sp:varName "isNumeric"^^xsd:boolean ] ] 
+	
+#           FILTER ( ?isNumeric = "false"^^xsd:boolean && ?maxOccurStatement != "infinity"^^xsd:string ) .
+#           -----
+			[   a sp:Filter ;
+                sp:expression [
+					a sp:and ;
+                    sp:arg1  
+						[   a sp:eq ;
+                            sp:arg1 [ sp:varName "isNumeric"^^xsd:string ] ;
+                            sp:arg2 "false"^^xsd:boolean ] ;
+                    sp:arg2  
+						[   a sp:ne ;
+                            sp:arg1 [ sp:varName "maxOccurStatement"^^xsd:string ] ;
+                            sp:arg2 "infinity"^^xsd:string ] ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The maxOccur statement ( " ;
+					sp:arg2 [ sp:varName "maxOccurStatement" ] ;
+					sp:arg3 " ) is not a non-negative integer or 'infinity' as specified by the description template ( " ;
+					sp:arg4 [ sp:varName "this" ] ;
+					sp:arg5 " )" ] ] ) ].		
 					
 # -----
 
