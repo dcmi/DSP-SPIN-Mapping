@@ -29,15 +29,16 @@
 
 	
 # ---------------
-# Description Templates
+# Description Templates [done]
 
 
 owl:Thing
 	spin:constraint 
 #[done]	#   Identifier
 		
-		#   Standalone
+#[done]	#   Standalone
 		[   a dsp2spin:DescriptionTemplates_Standalone_No ] ,
+		[   a dsp2spin:DescriptionTemplates_Standalone_1 ] ,
 		
 #[done]	#   Minimum Occurrence Constraint
 		[   a dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_1 ] ,
@@ -49,6 +50,8 @@ owl:Thing
 		
 dsp:DescriptionTemplate
 	spin:constraint 
+#[done] #   Standalone
+		[   a dsp2spin:DescriptionTemplates_Standalone_AllowedValues ] ,
 #[done]	#   Minimum Occurrence Constraint
 		[   a dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_2 ] ,
 		[   a dsp2spin:DescriptionTemplates_MinimumOccurrenceConstraint_AllowedValues ] ,
@@ -191,21 +194,21 @@ dsp:DescriptionTemplate
 # -----
 
 # ---------------
-# Description Templates - Standalone
+# Description Templates - Standalone [done]
 
 
 # Summary: Whether descriptions matching this template are allowed to occur standalone, i.e. without being the value of a property. 
 # Allowed values: "yes", "no", "both" 
-# Default: "both" 
+# Default: "both" --> no constraint needed 
 # Conditions:
-# - If standalone is "yes", a matching description may not be a description of value occurring elsewhere in the DSP. [done]
-# - If standalone is "no", a matching description *must* be a description of value occurring elsewhere in the DSP. [done]
-# - If standalone is "both", both are allowed. [done]
+# - If standalone is "yes", a matching description may not be a description of value occurring elsewhere in the DSP. --> no constraint needed 
+# - If standalone is "no", a matching description *must* be a description of value occurring elsewhere in the DSP. 
+# - If standalone is "both", both are allowed. --> no constraint needed 
 # - If this description template is referred to in a Value Constraint, standalone cannot be "yes". 
 
-# --> constraint: standalone = no
-# --> no constraints: standalone = yes, both
 
+# "false"^^xsd:boolean
+# -----
 dsp2spin:DescriptionTemplates_Standalone_No
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -283,7 +286,178 @@ dsp2spin:DescriptionTemplates_Standalone_No
 					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
 					sp:arg3 " ) is not allowed to occur standalone, i.e. without being the value of a property" ;
 					sp:arg4 " )" ] ] ) ].
+					
+# Allowed values: "true"^^xsd:boolean, "false"^^xsd:boolean, "both"^^xsd:string
+# -----		
+dsp2spin:DescriptionTemplates_Standalone_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+			
+#           ?this dsp:standalone ?standalone .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:standalone ;
+				sp:object [ sp:varName "standalone" ] ]
+	
+#           FILTER ( ?standalone != "true"^^xsd:boolean && ?standalone != "false"^^xsd:boolean && ?standalone != "both"^^xsd:string ) .
+#           -----
+			[   a sp:Filter ;
+                sp:expression [
+					a sp:and ;
+                    sp:arg1  
+						[   a sp:and ;
+							sp:arg1  
+								[   a sp:ne ;
+									sp:arg1 [ sp:varName "standalone"^^xsd:string ] ;
+									sp:arg2 "true"^^xsd:boolean 
+								] ;
+							sp:arg2  
+								[   a sp:ne ;
+									sp:arg1 [ sp:varName "standalone"^^xsd:string ] ;
+									sp:arg2 "false"^^xsd:boolean ] ] ;
+                    sp:arg2  
+						[   a sp:ne ;
+                            sp:arg1 [ sp:varName "standalone"^^xsd:string ] ;
+                            sp:arg2 "both"^^xsd:string ] ] ]
 
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The standalone value ( " ;
+					sp:arg2 [ sp:varName "standalone" ] ;
+					sp:arg3 " ) is not one of the allowed standalone values ( 'true'^^xsd:boolean, 'false'^^xsd:boolean, 'both'^^xsd:string )" ] ] ) ].	
+
+# If this description template is referred to in a Value Constraint, standalone cannot be "true"^^xsd:boolean. 
+# -----
+dsp2spin:DescriptionTemplates_Standalone_1
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+			
+#           ?descriptionTemplate dsp:standalone "true"^^xsd:boolean .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:standalone ;
+				sp:object "true"^^xsd:boolean ]
+			
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+
+#           FILTER EXISTS { 
+#		        ?dt rdf:type dsp:DescriptionTemplate .   
+#               ?dt dsp:statementTemplate ?st .
+#               ?st dsp:nonLiteralConstraint ?nlc .
+#               ?nlc dsp:descriptionTemplate ?descriptionTemplate .           
+#           }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+						[   sp:subject [ sp:varName "dt" ] ;
+                            sp:predicate rdf:type ;
+                            sp:object dsp:DescriptionTemplate ] 
+						[   sp:subject [ sp:varName "dt" ] ;
+                            sp:predicate dsp:statementTemplate ;
+                            sp:object [ sp:varName "st" ] ] 
+						[   sp:subject [ sp:varName "st" ] ;
+                            sp:predicate dsp:nonLiteralConstraint ;
+                            sp:object [ sp:varName "nlc" ] ] 
+						[   sp:subject [ sp:varName "nlc" ] ;
+                            sp:predicate dsp:descriptionTemplate ;
+                            sp:object [ sp:varName "descriptionTemplate" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "As the description template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " ) is referred to in a Value Constraint, standalone cannot be 'true'^^xsd:boolean." ] ] ) ].
+					
 # -----
 
 # ---------------

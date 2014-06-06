@@ -182,33 +182,18 @@
 # ---------------
 # Description Templates - Standalone
 
-	# yes:
+	# yes | "true"^^xsd:boolean
 	# -----
 	:DescriptionTemplates_Standalone_Yes_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ;
 		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass :DescriptionTemplates_Standalone_Yes_C1 ; 
-		dsp:statementTemplate [
-			a dsp:NonLiteralStatementTemplate ;
-			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
-			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-			dsp:property dcterms:subject ;
-			dsp:nonLiteralConstraint [ 
-				a dsp:NonLiteralConstraint ;
-				dsp:descriptionTemplate :DescriptionTemplates_Standalone_Yes_DT2 ;  
-				dsp:valueClass :DescriptionTemplates_Standalone_Yes_C2 ] ] .
-	:DescriptionTemplates_Standalone_Yes_DT2
-		a dsp:DescriptionTemplate ;
-		dsp:standalone "true"^^xsd:boolean ;
-		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
-		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
-		dsp:resourceClass :DescriptionTemplates_Standalone_Yes_C2 .
-	:DescriptionTemplates_Standalone_Yes_I2
-		a :DescriptionTemplates_Standalone_Yes_C2 , owl:Thing .
+		dsp:resourceClass :DescriptionTemplates_Standalone_Yes_C1 .
+	:DescriptionTemplates_Standalone_Yes_I1
+		a :DescriptionTemplates_Standalone_Yes_C1 , owl:Thing .
 
-	# no:
+	# no | "false"^^xsd:boolean
 	# -----
 	:DescriptionTemplates_Standalone_No_DT1
 		a dsp:DescriptionTemplate ;
@@ -233,11 +218,11 @@
 		dsp:resourceClass :DescriptionTemplates_Standalone_No_C2 .
 	:DescriptionTemplates_Standalone_No_I1
 		a :DescriptionTemplates_Standalone_No_C1 , owl:Thing ;
-		dcterms:subject :DescriptionTemplates_Standalone_No_I2 .
+		dcterms:subject :DescriptionTemplates_Standalone_No_I2 . # commented --> constraint violation
 	:DescriptionTemplates_Standalone_No_I2
 		a :DescriptionTemplates_Standalone_No_C2 , owl:Thing .
 		
-	# both:
+	# both^^xsd:string
 	# -----
 	:DescriptionTemplates_Standalone_Both_DT1
 		a dsp:DescriptionTemplate ;
@@ -265,6 +250,47 @@
 #		dcterms:subject :DescriptionTemplates_Standalone_Both_I2 .
 	:DescriptionTemplates_Standalone_Both_I2
 		a :DescriptionTemplates_Standalone_Both_C2 , owl:Thing .
+		
+	# Allowed values: "true"^^xsd:boolean, "false"^^xsd:boolean, "both"^^xsd:string
+	# -----
+	:DescriptionTemplates_Standalone_DT4
+		a dsp:DescriptionTemplate ;
+#		dsp:standalone "yes"^^xsd:string .
+#		dsp:standalone "no"^^xsd:string .
+#		dsp:standalone "true"^^xsd:string .
+		dsp:standalone "true"^^xsd:boolean .
+#		dsp:standalone "false"^^xsd:boolean .
+#		dsp:standalone "both"^^xsd:string .
+
+	# If this description template is referred to in a Value Constraint, standalone cannot be "true"^^xsd:boolean. 
+	# -----
+	:DescriptionTemplates_Standalone_DT5
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :DescriptionTemplates_Standalone_C5 ; 
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "0"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:property dcterms:subject ;
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :DescriptionTemplates_Standalone_DT6 ;  
+				dsp:valueClass :DescriptionTemplates_Standalone_C6 ] ] .
+	:DescriptionTemplates_Standalone_DT6
+		a dsp:DescriptionTemplate ;
+#		dsp:standalone "true"^^xsd:boolean ; # NOT commented --> constraint violation
+		dsp:standalone "false"^^xsd:boolean ;
+		dsp:minOccur "0"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :DescriptionTemplates_Standalone_C6 .
+	:DescriptionTemplates_Standalone_I5
+		a :DescriptionTemplates_Standalone_C5 , owl:Thing ;
+		dcterms:subject :DescriptionTemplates_Standalone_I6 .
+	:DescriptionTemplates_Standalone_I6
+		a :DescriptionTemplates_Standalone_C6 , owl:Thing .	
 
 # -----
 
@@ -860,10 +886,10 @@
 			dsp:nonLiteralConstraint [
 				a dsp:NonLiteralConstraint ;
 				dsp:descriptionTemplate :Non-LiteralValueConstraints_DescriptionTemplateReference_DT2 ] ] .
-	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT2
-#	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT3 # comment out to violate constraint
+	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT2 # commented --> constraint violation
+#	:Non-LiteralValueConstraints_DescriptionTemplateReference_DT3 # NOT commented --> constraint violation
 		a dsp:DescriptionTemplate ;
-		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:standalone "false"^^xsd:boolean ; 
 		dsp:minOccur "1"^^xsd:nonNegativeInteger ;
 		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
 		dsp:resourceClass :Non-LiteralValueConstraints_DescriptionTemplateReference_C2 .
