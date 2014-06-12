@@ -143,14 +143,14 @@ owl:Thing
 		[   a dsp2spin:NonLiteralValueConstraints_ValueURIOccurrenceConstraint_Disallowed ] ,
 #[done]	#   Value URI List Constraint
 		[   a dsp2spin:Non-LiteralValueConstraints_ValueURIListConstraint ] ,
-		#   Vocabulary Encoding Scheme Occurrence Constraint
+#[done]	#   Vocabulary Encoding Scheme Occurrence Constraint
 		[   a dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Mandatory ] ,
 		[   a dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed ] ,
-		#   Vocabulary Encoding Scheme List Constraint
+#[done]	#   Vocabulary Encoding Scheme List Constraint
 		[   a dsp2spin:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint ] ,
-		#  	Minimum Occurrence Constraint
+#[done]	#  	Minimum Occurrence Constraint
 		[   a dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint ] ,
-		#  	Maximum Occurrence Constraint
+#[done]	#  	Maximum Occurrence Constraint
 		[   a dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint ] ,
 		
 		#   Literal List Constraint
@@ -169,8 +169,13 @@ owl:Thing
 		
 dsp:DescriptionTemplate
 	spin:constraint 
-		#  	Minimum Occurrence Constraint
-		[   a dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2 ] .
+#[done]	#  	Minimum Occurrence Constraint
+		[   a dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2 ] ,
+		[   a dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_AllowedValues ] ,
+#[done]	#  	Maximum Occurrence Constraint
+		[   a dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_AllowedValues ] ,
+#[done]	#   Vocabulary Encoding Scheme Occurrence Constraint
+		[   a dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_AllowedValues ] .
 		
 # -----
 
@@ -4112,12 +4117,12 @@ dsp2spin:Non-LiteralValueConstraints_ValueURIListConstraint
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - Vocabulary Encoding Scheme Occurrence Constraint
+# Non-Literal Value Constraints - Vocabulary Encoding Scheme Occurrence Constraint [done]
 
 
 # Summary: Whether a vocabulary encoding scheme must be given 
 # Allowed values: "disallowed", "optional", "mandatory" 
-# Default: "optional" 
+# Default: "optional" --> no constraint needed
 
 
 # mandatory
@@ -4339,11 +4344,129 @@ dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint
 					sp:arg1 "Vocabulary encoding schemes are not allowed as specified in the description template ( " ;
 					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
 					sp:arg3 " )" ] ] ) ].
+					
+# Allowed values: "disallowed"^^dsp:occurrence, "optional"^^dsp:occurrence, "mandatory"^^dsp:occurrence 
+# -----
+dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {		
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:vocabularyEncodingSchemeOccurrence ?vocabularyEncodingSchemeOccurrence .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:vocabularyEncodingSchemeOccurrence ;
+				sp:object [ sp:varName "vocabularyEncodingSchemeOccurrence" ] ]		
+
+#           BIND ( ( str ( ?vocabularyEncodingSchemeOccurrence ) ) AS ?vocabularyEncodingSchemeOccurrenceStr ) . 
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "vocabularyEncodingSchemeOccurrenceStr" ];
+				sp:expression [
+					a sp:str;
+					sp:arg1 [ sp:varName "vocabularyEncodingSchemeOccurrence" ] ] ] 
+
+#           BIND ( ( datatype ( ?vocabularyEncodingSchemeOccurrence ) ) AS ?datatype ) . 
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "datatype" ];
+				sp:expression [
+					a sp:datatype;
+					sp:arg1 [ sp:varName "vocabularyEncodingSchemeOccurrence" ] ] ] 	
+
+#           FILTER ( 
+#               (   ?vocabularyEncodingSchemeOccurrenceStr^^xsd:string != "disallowed"^^xsd:string && 
+#                   ?vocabularyEncodingSchemeOccurrenceStr^^xsd:string != "optional"^^xsd:string && 
+#                   ?vocabularyEncodingSchemeOccurrenceStr^^xsd:string != "mandatory"^^xsd:string )
+#			    ||
+#                   ?datatype^^xsd:string != dsp:occurrence ) .
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+				    a sp:or ;
+                    sp:arg1 [ 
+					    a sp:and ;
+                        sp:arg1 [ 
+							a sp:and ;
+                            sp:arg1 [ 
+								a sp:ne ;
+                                sp:arg1 [ sp:varName "vocabularyEncodingSchemeOccurrenceStr"^^xsd:string ] ;
+                                sp:arg2 "disallowed"^^xsd:string ] ;
+                            sp:arg2 [
+								a sp:ne ;
+                                sp:arg1 [ sp:varName "vocabularyEncodingSchemeOccurrenceStr"^^xsd:string ] ;
+                                sp:arg2 "optional"^^xsd:string ] ] ;
+                        sp:arg2 [ 
+							a sp:ne ;
+                            sp:arg1 [ sp:varName "vocabularyEncodingSchemeOccurrenceStr"^^xsd:string ] ;
+                            sp:arg2 "mandatory"^^xsd:string ] ] ;
+                    sp:arg2 [ 
+						a sp:ne ;
+                        sp:arg1 [ sp:varName "datatype"^^xsd:string ] ;
+                        sp:arg2 dsp:occurrence ] ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The vocabulary encoding scheme occurrence value ( " ;
+					sp:arg2 [ sp:varName "vocabularyEncodingSchemeOccurrenceStr" ] ;
+					sp:arg3 "^^" ;
+					sp:arg4 [ sp:varName "datatype" ] ;
+					sp:arg5 " ) is not one of the allowed vocabulary encoding scheme occurrence values ( 'disallowed'^^dsp:occurrence, 'optional'^^dsp:occurrence, 'mandatory'^^dsp:occurrence )" ] ] ) ].	
 
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - Vocabulary Encoding Scheme List Constraint
+# Non-Literal Value Constraints - Vocabulary Encoding Scheme List Constraint [done]
 
 
 # Summary: URIs that are allowed as Vocabulary Encoding schemes. 
@@ -4352,6 +4475,7 @@ dsp2spin:NonLiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint
 # Conditions: If a vocabulary encoding scheme is given, it must be taken from this list. Cannot be specified if vocabulary encoding scheme occurrence is "disallowed"
 
 
+# -----
 dsp2spin:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -4475,15 +4599,16 @@ dsp2spin:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - Minimum Occurrence Constraint
+# Non-Literal Value Constraints - Minimum Occurrence Constraint [done]
 
 
-# Summary: The minimum number of times this kind of value string must appear in the enclosing Statement. [done]
+# Summary: The minimum number of times this kind of value string must appear in the enclosing Statement.
 # Allowed values: non-negative integer 
-# Default: 0 
-# Conditions: must be equal or less than the Maximum occurrence [done]
+# Default: 0 [--> no constraint needed]
+# Conditions: must be equal or less than the Maximum occurrence 
 
 
+# -----
 dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -4701,6 +4826,111 @@ dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2
 					sp:arg5 " ) as specified in description template ( " ;
 					sp:arg6 [ sp:varName "this" ] ;
 					sp:arg7 " )" ] ] ) ].
+					
+# Allowed values: non-negative integer
+# -----
+dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {		
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]
+				
+#           ?valueStringConstraint dsp:minOccur ?minCardinality .
+#           -----
+			[   sp:subject [ sp:varName "valueStringConstraint" ] ;
+			    sp:predicate dsp:minOccur ;
+				sp:object [ sp:varName "minCardinality" ] ]
+				
+#           BIND ( ( datatype ( ?minCardinality ) ) AS ?datatype ) . 
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "datatype" ];
+				sp:expression [
+					a sp:datatype;
+					sp:arg1 [ sp:varName "minCardinality" ] ] ] 
+				
+#           BIND( ( IF( sp:isNumeric ( ?minCardinality ), "true"^^xsd:boolean, "false"^^xsd:boolean ) ) AS ?isNumeric ) .
+#           FILTER ( ?isNumeric = "false"^^xsd:boolean ) . 
+#           -----	
+			[   a sp:Bind ;
+				sp:expression [
+					a sp:if ;
+					sp:arg1 [ 
+						a sp:isNumeric ;
+						sp:arg1 [ sp:varName "minCardinality"^^xsd:string ] ] ;
+					sp:arg2 "true"^^xsd:boolean ;
+					sp:arg3 "false"^^xsd:boolean ] ;
+				sp:variable [ sp:varName "isNumeric"^^xsd:boolean ] ] 
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:eq ;
+					sp:arg1 [ sp:varName "isNumeric"^^xsd:boolean ] ;
+					sp:arg2 "false"^^xsd:boolean ] ] 
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The value string minimum occurrence constraint ( " ;
+					sp:arg2 [ sp:varName "minCardinality" ] ;
+					sp:arg3 "^^" ;
+					sp:arg4 [ sp:varName "datatype" ] ;
+					sp:arg5 " ) is not a non-negative integer as specified by the description template ( " ;
+					sp:arg6 [ sp:varName "this" ] ;
+					sp:arg7 " )" ] ] ) ].
 
 # -----
 
@@ -4708,12 +4938,13 @@ dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2
 # Non-Literal Value Constraints - Maximum Occurrence Constraint
 
 
-# Summary: The maximum number of times this kind of value string is allowed to appear in the enclosing Statement. [done]
+# Summary: The maximum number of times this kind of value string is allowed to appear in the enclosing Statement. 
 # Allowed values: non-negative integer or "infinity" 
-# Default: "infinity" 
-# Conditions: must be equal or greater than the Minimum occurrence [done]
+# Default: "infinity" [--> no constraint needed]
+# Conditions: must be equal or greater than the Minimum occurrence 
 
 
+# -----
 dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -4837,6 +5068,119 @@ dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint
 					sp:arg4 [ sp:varName "maxCardinality" ] ;
 					sp:arg5 " ) as specified in description template ( " ;
 					sp:arg6 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg7 " )" ] ] ) ].
+					
+# Allowed values: non-negative integer or "infinity" 
+# -----
+dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_AllowedValues
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {
+#		    ?this rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?this dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]
+				
+#           ?valueStringConstraint dsp:minOccur ?maxCardinality .
+#           -----
+			[   sp:subject [ sp:varName "valueStringConstraint" ] ;
+			    sp:predicate dsp:maxOccur ;
+				sp:object [ sp:varName "maxCardinality" ] ]
+				
+#           BIND ( ( datatype ( ?maxCardinality ) ) AS ?datatype ) . 
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "datatype" ];
+				sp:expression [
+					a sp:datatype;
+					sp:arg1 [ sp:varName "maxCardinality" ] ] ] 
+				
+#           BIND( ( IF( sp:isNumeric ( ?maxCardinality ), "true"^^xsd:boolean, "false"^^xsd:boolean ) ) AS ?isNumeric ) .
+#           -----	
+			[   a sp:Bind ;
+				sp:expression [
+					a sp:if ;
+					sp:arg1 [ 
+						a sp:isNumeric ;
+						sp:arg1 [ sp:varName "maxCardinality"^^xsd:string ] ] ;
+					sp:arg2 "true"^^xsd:boolean ;
+					sp:arg3 "false"^^xsd:boolean ] ;
+				sp:variable [ sp:varName "isNumeric"^^xsd:boolean ] ] 
+	
+#           FILTER ( ?isNumeric = "false"^^xsd:boolean && ?maxCardinality != "infinity"^^xsd:string ) .
+#           -----
+			[   a sp:Filter ;
+                sp:expression [
+					a sp:and ;
+                    sp:arg1  
+						[   a sp:eq ;
+                            sp:arg1 [ sp:varName "isNumeric"^^xsd:string ] ;
+                            sp:arg2 "false"^^xsd:boolean ] ;
+                    sp:arg2  
+						[   a sp:ne ;
+                            sp:arg1 [ sp:varName "maxCardinality"^^xsd:string ] ;
+                            sp:arg2 "infinity"^^xsd:string ] ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "The value string maximum occurrence constraint ( " ;
+					sp:arg2 [ sp:varName "maxCardinality" ] ;
+					sp:arg3 "^^" ;
+					sp:arg4 [ sp:varName "datatype" ] ;
+					sp:arg5 " ) is not a non-negative integer or 'infinity' as specified by the description template ( " ;
+					sp:arg6 [ sp:varName "this" ] ;
 					sp:arg7 " )" ] ] ) ].
 
 # -----

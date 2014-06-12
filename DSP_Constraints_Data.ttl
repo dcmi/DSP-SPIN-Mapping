@@ -1103,6 +1103,21 @@
 		dcterms:subject :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I3 .
 	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_I3
 		a :Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_Disallowed_C3 , owl:Thing .
+		
+	# Allowed values: "disallowed", "optional", "mandatory" 
+	# -----
+	:Non-LiteralValueConstraints_VocabularyEncodingSchemeOccurrenceConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+#				dsp:vocabularyEncodingSchemeOccurrence "disallowed"^^dsp:occurrence 
+#				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence 
+				dsp:vocabularyEncodingSchemeOccurrence "mandatory"^^dsp:occurrence 
+#				dsp:vocabularyEncodingSchemeOccurrence "disallowed"^^xsd:string # NOT commented --> constraint violation
+#				dsp:vocabularyEncodingSchemeOccurrence "XXXXX"^^dsp:occurrence # NOT commented --> constraint violation
+			] ] .
 
 # -----
 
@@ -1145,6 +1160,10 @@
 	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES1 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES2 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint_VES3 a skos:ConceptScheme .
+	
+	# Vocabulary encoding scheme list constraint cannot be specified if vocabulary encoding scheme occurrence is "disallowed"		
+	# -----
+	
 		
 # -----
 
@@ -1152,6 +1171,7 @@
 # Non-Literal Value Constraints - Minimum Occurrence Constraint
 
 
+	# -----
 	:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ; 
@@ -1258,6 +1278,42 @@
 	:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2_VES1 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2_VES2 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_2_VES3 a skos:ConceptScheme .
+	
+	# Allowed values: non-negative integer
+	# -----
+	:Non-LiteralValueConstraints_MinimumOccurrenceConstraint_DT20
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_C20 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_DT30 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_C30 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_C31 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_C32 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_I30 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_I31 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_I32 ;
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_VES30 ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_VES31 ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MinimumOccurrenceConstraint_VES32 ;
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; # commented --> constraint violation
+#					dsp:minOccur "1"^^xsd:string ; # NOT commented --> constraint violation
+					dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+					dsp:literal "value string 1"@en , "value string 1"^^xsd:string ; 
+					dsp:literal "value string 2"@en , "value string 2"^^xsd:string ;
+					dsp:literal "value string 3"@en , "value string 3"^^xsd:string ] ] ] .
 		
 # -----
 
@@ -1265,6 +1321,7 @@
 # Non-Literal Value Constraints - Maximum Occurrence Constraint
 
 
+	# -----
 	:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_DT1
 		a dsp:DescriptionTemplate ;
 		dsp:standalone "true"^^xsd:boolean ; 
@@ -1316,5 +1373,43 @@
 	:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES1 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES2 a skos:ConceptScheme .
 	:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES3 a skos:ConceptScheme .
+	
+	# Allowed values: non-negative integer or "infinity" 
+	# -----
+	:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_DT20
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_C20 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_DT21 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_C21 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_C22 ;
+				dsp:valueClass :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_C23 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_I21 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_I22 ; 
+				dsp:valueURI :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_I23 ;
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES20 ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES21 ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_MaximumOccurrenceConstraint_VES22 ;
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+					dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+#					dsp:maxOccur "infinity"^^xsd:string ;
+#					dsp:maxOccur "1"^^xsd:string ; # NOT commented --> constraint violation
+					dsp:literal "value string 1"@en , "value string 1"^^xsd:string ; 
+					dsp:literal "value string 2"@en , "value string 2"^^xsd:string ;
+					dsp:literal "value string 3"@en , "value string 3"^^xsd:string 
+				] ] ] .
 		
 # -----
