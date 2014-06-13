@@ -152,12 +152,17 @@ owl:Thing
 		[   a dsp2spin:Non-LiteralValueConstraints_MinimumOccurrenceConstraint ] ,
 #[done]	#  	Maximum Occurrence Constraint
 		[   a dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint ] ,
-		
-		#   Literal List Constraint
+#[done]	#   Literal List Constraint
 		[   a dsp2spin:NonLiteralValueConstraints_LiteralListConstraint ] ,
+		[   a dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_LiteralLanguageConstraint ] ,
+		[   a dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_LiteralLanguageListConstraint ] ,
+		[   a dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_SyntaxEncodingSchemeConstraint ] ,
+		[   a dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_SyntaxEncodingSchemeListConstraint ] ,
+		
 		#   Literal Language Constraint
 		[   a dsp2spin:NonLiteralValueConstraints_LiteralLanguageConstraint_Mandatory ] ,
 		[   a dsp2spin:NonLiteralValueConstraints_LiteralLanguageConstraint_Disallowed ] ,
+		
 		#   Literal Language List Constraint 
 		[   a dsp2spin:NonLiteralValueConstraints_LiteralLanguageListConstraint ] ,
 		#   Syntax Encoding Scheme Constraint
@@ -5033,10 +5038,10 @@ dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint
 			    sp:predicate dsp:valueStringConstraint ;
 				sp:object [ sp:varName "valueStringConstraint" ] ]
 				
-#           ?valueStringConstraint dsp:minOccur ?maxCardinality .
+#           ?valueStringConstraint dsp:maxOccur ?maxCardinality .
 #           -----
 			[   sp:subject [ sp:varName "valueStringConstraint" ] ;
-			    sp:predicate dsp:minOccur ;
+			    sp:predicate dsp:maxOccur ;
 				sp:object [ sp:varName "maxCardinality" ] ]
 				
 #	    	cardinality > maxCardinality
@@ -5186,13 +5191,660 @@ dsp2spin:Non-LiteralValueConstraints_MaximumOccurrenceConstraint_AllowedValues
 # -----
 
 # ---------------
-# Non-Literal Value Constraints - All Literal value constraints (section 6.5) can be used for value strings as well. 
+# Non-Literal Value Constraints - Literal List Constraint [done]
 
 
-# 
+# Summary: Literals that are allowed as values. 
+# Allowed values: a list of literals, i.e. (string, language tag) or (string, syntax encoding scheme URI) pairs. 
+# Default: no constraint 
+# Conditions: if given, no other literal constraint may be given 
 
-# 
+
 # -----
+dsp2spin:NonLiteralValueConstraints_LiteralListConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+					
+#           ?object rdf:value ?literal .
+#           -----
+			[   sp:subject [ sp:varName "object" ] ;
+			    sp:predicate rdf:value ;
+				sp:object [ sp:varName "literal" ] ]					
+				
+#           BIND( ( IF( sp:datatype( ?literal^^xsd:string ) = rdf:langString, sp:lang( ?literal^^xsd:string ), sp:datatype( ?literal^^xsd:string ) ) ) AS ?datatypeOrLanguage^^xsd:string ) .	
+			[   a sp:Bind ;
+                sp:expression [
+					a sp:if ;
+                    sp:arg1 [ 
+						a sp:eq ;
+						sp:arg1 [ 
+							a sp:datatype;
+							sp:arg1 [ sp:varName "literal"^^xsd:string ] ] ;
+						sp:arg2 rdf:langString ] ;
+                    sp:arg2 [ 
+						a sp:lang;
+						sp:arg1 [ sp:varName "literal"^^xsd:string ] ] ;
+                    sp:arg3 [ 
+						a sp:datatype;
+						sp:arg1 [ sp:varName "literal"^^xsd:string ] ] ] ;
+                sp:variable [ sp:varName "datatypeOrLanguage"^^xsd:string ] ]
+					
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]				
+				
+#			FILTER EXISTS { ?valueStringConstraint dsp:literal ?l }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "l" ] ] ) ] ]
+				
+#			FILTER NOT EXISTS { ?valueStringConstraint dsp:literal ?literal }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:notExists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "literal" ] ] ) ] ]
 
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "Value string ( " ;
+					sp:arg2 [ sp:varName "literal" ] ;
+					sp:arg3 "^^" ;
+					sp:arg4 [ sp:varName "datatypeOrLanguage" ] ;
+					sp:arg5 " ) not allowed for description template ( " ;
+					sp:arg6 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg7 " )" ] ] ) ].
+					
+# As a literal list constraint is given, no literal language constraint can be given	
+# -----
+dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_LiteralLanguageConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+					
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]					
 
+#			FILTER EXISTS { 
+#               ?object rdf:value ?literal .
+#               ?valueStringConstraint dsp:literal ?literal . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+						[   sp:subject [ sp:varName "object" ] ;
+							sp:predicate rdf:value ;
+							sp:object [ sp:varName "literal" ] ]
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "literal" ] ] ) ] ]
+							
+#			FILTER EXISTS { ?valueStringConstraint dsp:languageOccurrence ?languageOccurrence }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:languageOccurrence ;
+                            sp:object [ sp:varName "languageOccurrence" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "As a literal list constraint is given, no literal language constraint can be given as specified in description template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " )" ] ] ) ].
+					
+# As a literal list constraint is given, no literal language list constraint can be given	
+# -----
+dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_LiteralLanguageListConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+					
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]	
+							
+#			FILTER EXISTS { 
+#               ?object rdf:value ?literal .
+#               ?valueStringConstraint dsp:literal ?literal . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+						[   sp:subject [ sp:varName "object" ] ;
+							sp:predicate rdf:value ;
+							sp:object [ sp:varName "literal" ] ]
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "literal" ] ] ) ] ]
+							
+#			FILTER EXISTS { ?valueStringConstraint dsp:language ?language }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:language ;
+                            sp:object [ sp:varName "language" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "As a literal list constraint is given, no literal language list constraint can be given as specified in description template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " )" ] ] ) ].
+					
+# As a literal list constraint is given, no syntax encoding scheme constraint can be given	
+# -----
+dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_SyntaxEncodingSchemeConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+					
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]	
+							
+#			FILTER EXISTS { 
+#               ?object rdf:value ?literal .
+#               ?valueStringConstraint dsp:literal ?literal . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+						[   sp:subject [ sp:varName "object" ] ;
+							sp:predicate rdf:value ;
+							sp:object [ sp:varName "literal" ] ]
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "literal" ] ] ) ] ]
+							
+#			FILTER EXISTS { ?valueStringConstraint dsp:syntaxEncodingSchemeOccurrence ?syntaxEncodingSchemeOccurrence }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:syntaxEncodingSchemeOccurrence ;
+                            sp:object [ sp:varName "syntaxEncodingSchemeOccurrence" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "As a literal list constraint is given, no syntax encoding scheme constraint can be given as specified in description template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " )" ] ] ) ].
+					
+# As a literal list constraint is given, no syntax encoding scheme list constraint can be given	
+# -----
+dsp2spin:NonLiteralValueConstraints_LiteralListConstraint_SyntaxEncodingSchemeListConstraint
+	a spin:Template; 
+	rdfs:subClassOf spin:Templates ;
+	spin:labelTemplate "" ;
+	rdfs:label "" ;
+	rdfs:comment "" ;
+	spin:body [
+		a sp:Construct ;
+#	    CONSTRUCT {
+#		    _:violation 
+#			    a spin:ConstraintViolation ;
+#				rdfs:label ?violationMessage ;
+#			    spin:violationRoot ?this ;
+#			    spin:violationPath ?propertyPath ;
+#				spin:violationSource ?violationSource }
+		sp:templates ( 
+			[   sp:subject _:violation ;
+				sp:predicate rdf:type ;
+				sp:object spin:ConstraintViolation ]
+			[   sp:subject _:violation ; 
+				sp:predicate rdfs:label ;
+				sp:object [ sp:varName "violationMessage" ] ] 
+			[	sp:subject _:violation ;
+				sp:predicate spin:violationRoot ;
+				sp:object spin:_this ]		 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationPath ;
+				sp:object [ sp:varName "violationPath" ] ] 
+			[   sp:subject _:violation ;
+				sp:predicate spin:violationSource ;
+				sp:object [ sp:varName "violationSource" ] ] ) ;
+		sp:where ( 
+#		WHERE {	
+#           ?this rdf:type ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate rdf:type ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?this ?property ?object .
+#           -----
+			[   sp:subject [ sp:varName "this" ] ;
+			    sp:predicate [ sp:varName "property" ] ;
+				sp:object [ sp:varName "object" ] ]
+				
+#           FILTER ( ?property != rdf:type ) .
+			[   a sp:Filter ;
+				sp:expression [ 
+					a sp:ne;
+				    sp:arg1 [ sp:varName "property" ] ;
+					sp:arg2 rdf:type ] ]
+					
+#		    ?descriptionTemplate rdf:type dsp:DescriptionTemplate .
+#           -----
+            [   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate rdf:type ;
+				sp:object dsp:DescriptionTemplate ]
+				
+#           ?descriptionTemplate dsp:resourceClass ?resourceClass .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:resourceClass ;
+				sp:object [ sp:varName "resourceClass" ] ]
+				
+#           ?descriptionTemplate dsp:statementTemplate ?statementTemplate .
+#           -----
+			[   sp:subject [ sp:varName "descriptionTemplate" ] ;
+			    sp:predicate dsp:statementTemplate ;
+				sp:object [ sp:varName "statementTemplate" ] ]
+				
+#           ?statementTemplate dsp:property ?property .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:property ;
+				sp:object [ sp:varName "property" ] ]
+				
+#           ?statementTemplate dsp:nonLiteralConstraint ?nonLiteralConstraint .
+#           -----
+			[   sp:subject [ sp:varName "statementTemplate" ] ;
+			    sp:predicate dsp:nonLiteralConstraint ;
+				sp:object [ sp:varName "nonLiteralConstraint" ] ]
+				
+#           ?nonLiteralConstraint dsp:valueStringConstraint ?valueStringConstraint .
+#           -----
+			[   sp:subject [ sp:varName "nonLiteralConstraint" ] ;
+			    sp:predicate dsp:valueStringConstraint ;
+				sp:object [ sp:varName "valueStringConstraint" ] ]	
+							
+#			FILTER EXISTS { 
+#               ?object rdf:value ?literal .
+#               ?valueStringConstraint dsp:literal ?literal . }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+						[   sp:subject [ sp:varName "object" ] ;
+							sp:predicate rdf:value ;
+							sp:object [ sp:varName "literal" ] ]
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:literal ;
+                            sp:object [ sp:varName "literal" ] ] ) ] ]
+							
+#			FILTER EXISTS { ?valueStringConstraint dsp:syntaxEncodingScheme ?syntaxEncodingScheme }
+#           -----
+			[   a sp:Filter ;
+                sp:expression [ 
+					a sp:exists ;
+                    sp:elements ( 
+					    [   sp:subject [ sp:varName "valueStringConstraint" ] ;
+                            sp:predicate dsp:syntaxEncodingScheme ;
+                            sp:object [ sp:varName "syntaxEncodingScheme" ] ] ) ] ]
+
+#    		BIND ( ... ) AS ?violationMessage ) . }
+#           -----
+			[   a sp:Bind;
+				sp:variable [ sp:varName "violationMessage" ];
+				sp:expression [ 
+					a fn:concat; 
+					sp:arg1 "As a literal list constraint is given, no syntax encoding scheme list constraint can be given as specified in description template ( " ;
+					sp:arg2 [ sp:varName "descriptionTemplate" ] ;
+					sp:arg3 " )" ] ] ) ].
+					
 # -----
