@@ -1606,3 +1606,123 @@
 	:Non-LiteralValueConstraints_LiteralListConstraint_VES10 a skos:ConceptScheme .	
 		
 # -----
+
+# ---------------
+# Non-Literal Value Constraints - Literal Language Constraint
+
+
+	# mandatory
+	# -----
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_DT1
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C1 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_LiteralLanguageConstraint_DT2 ;
+				dsp:valueClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C2 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_LiteralLanguageConstraint_I2 ; 
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES1 ;
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+					dsp:maxOccur "10"^^xsd:nonNegativeInteger ; 
+					dsp:languageOccurrence "mandatory"^^dsp:occurrence 
+				] ] ] .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I1
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C1 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_LiteralLanguageConstraint_I2 .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I2
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C2 , skos:Concept , owl:Thing ;
+		dcam:memberOf :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES1 ;
+		skos:inScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES1 ;
+#		rdf:value "1" ; # NOT commented --> constraint violation
+		rdf:value "1"@en .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_VES1 a skos:ConceptScheme .
+
+	# if "mandatory", syntax encoding schemes are automatically disallowed 
+	# -----
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_DT3
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C3 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_LiteralLanguageConstraint_DT4 ;
+				dsp:valueClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C4 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_LiteralLanguageConstraint_I4 ; 
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES2 ;
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+					dsp:maxOccur "10"^^xsd:nonNegativeInteger ; 
+					dsp:languageOccurrence "mandatory"^^dsp:occurrence 
+				] ] ] .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I3
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C3 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_LiteralLanguageConstraint_I4 .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I4
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C4 , skos:Concept , owl:Thing ;
+		dcam:memberOf :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES2 ;
+		skos:inScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES2 ;
+#		rdf:value "1"^^xsd:string ; # NOT commented --> constraint violation
+		rdf:value "1"@en .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_VES2 a skos:ConceptScheme .
+
+	# disallowed
+	# -----
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_DT5
+		a dsp:DescriptionTemplate ;
+		dsp:standalone "true"^^xsd:boolean ; 
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C5 ;
+		dsp:statementTemplate [
+			a dsp:NonLiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+			dsp:maxOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:property dcterms:subject ; 
+			dsp:nonLiteralConstraint [ 
+				a dsp:NonLiteralConstraint ;
+				dsp:descriptionTemplate :Non-LiteralValueConstraints_LiteralLanguageConstraint_DT6 ;
+				dsp:valueClass :Non-LiteralValueConstraints_LiteralLanguageConstraint_C6 ;
+				dsp:valueURIOccurrence "optional"^^dsp:occurrence ; 
+				dsp:valueURI :Non-LiteralValueConstraints_LiteralLanguageConstraint_I6 ; 
+				dsp:vocabularyEncodingSchemeOccurrence "optional"^^dsp:occurrence ; 
+				dsp:vocabularyEncodingScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES3 ;
+				dsp:valueStringConstraint [
+					a dsp:ValueStringConstraint ;
+					dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+					dsp:maxOccur "10"^^xsd:nonNegativeInteger ; 
+					dsp:languageOccurrence "disallowed"^^dsp:occurrence 
+				] ] ] .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I5
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C5 , owl:Thing ;
+		dcterms:subject :Non-LiteralValueConstraints_LiteralLanguageConstraint_I6 .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_I6
+		a :Non-LiteralValueConstraints_LiteralLanguageConstraint_C6 , skos:Concept , owl:Thing ;
+		dcam:memberOf :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES3 ;
+		skos:inScheme :Non-LiteralValueConstraints_LiteralLanguageConstraint_VES3 ;
+#		rdf:value "1"@en ; # NOT commented --> constraint violation
+		rdf:value "1" .
+	:Non-LiteralValueConstraints_LiteralLanguageConstraint_VES3 a skos:ConceptScheme .
+
+# -----
