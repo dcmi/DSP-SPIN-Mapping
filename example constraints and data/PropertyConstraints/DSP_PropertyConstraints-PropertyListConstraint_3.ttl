@@ -1,0 +1,37 @@
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: 	  <http://www.w3.org/2002/07/owl#> . 
+@prefix foaf:     <http://xmlns.com/foaf/0.1/#> .
+@prefix a:        <http://www.example.org/OWL2InstanceData#> .
+@prefix ex: 	  <http://www.example.org/ex#> .
+@prefix : 	      <http://dublincore.org/dc-dsp/ex#> .
+@prefix dsp:      <http://dublincore.org/dc-dsp#> .
+@prefix dcterms:  <http://purl.org/dc/terms#> .
+@prefix swrc:     <http://swrc.ontoware.org/ontology#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcam:     <http://purl.org/dc/dcam#> .
+
+
+# ---------------
+# Property Constraints - Property List Constraint
+
+
+	# A property list constraint cannot occur together with a sub-property constraint
+	# -----
+	:personDescriptionTemplate
+		a dsp:DescriptionTemplate ;
+		dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
+		dsp:maxOccur "infinity"^^xsd:nonNegativeInteger ; 
+		dsp:resourceClass foaf:Person ;
+		dsp:statementTemplate [
+			a dsp:LiteralStatementTemplate ;
+			dsp:minOccur "1"^^xsd:nonNegativeInteger ;
+			dsp:maxOccur "5"^^xsd:nonNegativeInteger ;
+			dsp:property foaf:familyName ; 
+			dsp:subPropertyOf foaf:name ] . # --> constraint violation
+	:TimBernersLee
+		a foaf:Person, owl:Thing ;
+		foaf:familyName "Berners-Lee"^^xsd:string .
+	
+# -----
