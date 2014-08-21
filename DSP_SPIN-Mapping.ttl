@@ -1400,6 +1400,7 @@ dsp2spin:StatementTemplates_MaximumOccurrenceConstraint_AllowedValues
 # Default: N/A 
 # Conditions: cannot occur together with a sub-property constraint
 
+# -----
 dsp2spin:PropertyConstraints_PropertyListConstraint
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -1505,11 +1506,12 @@ dsp2spin:PropertyConstraints_PropertyListConstraint
 					a fn:concat; 
 					sp:arg1 "property ( " ;
 					sp:arg2 [ sp:varName "property" ] ;
-					sp:arg3 " not allowed for description template ( " ;
+					sp:arg3 " ) not allowed for description template ( " ;
 					sp:arg4 [ sp:varName "descriptionTemplate" ] ;
 					sp:arg5 " )" ] ] ) ].
 	
 # A property list constraint cannot occur together with a sub-property constraint	
+# -----
 dsp2spin:PropertyConstraints_PropertyListConstraint_2
 	a spin:Template; 
 	rdfs:subClassOf spin:Templates ;
@@ -4653,7 +4655,7 @@ dsp2spin:Non-LiteralValueConstraints_VocabularyEncodingSchemeListConstraint
 					a fn:concat; 
 					sp:arg1 "The vocabulary encoding scheme ( " ;
 					sp:arg2 [ sp:varName "ves" ] ;
-					sp:arg3 " is not allowed for description template ( " ;
+					sp:arg3 " ) is not allowed for description template ( " ;
 					sp:arg4 [ sp:varName "descriptionTemplate" ] ;
 					sp:arg5 " )" ] ] ) ].
 

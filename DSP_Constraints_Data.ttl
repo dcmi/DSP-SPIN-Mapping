@@ -501,6 +501,7 @@
 		foaf:firstName "literal"^^xsd:string .
 		
 	# A property list constraint cannot occur together with a sub-property constraint
+	# -----
 	:PropertyConstraints_PropertyListConstraint_DT2
 		a dsp:DescriptionTemplate ;
 		dsp:minOccur "0"^^xsd:nonNegativeInteger ;
