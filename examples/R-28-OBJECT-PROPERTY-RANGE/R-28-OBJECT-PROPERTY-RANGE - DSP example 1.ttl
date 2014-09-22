@@ -15,14 +15,13 @@
 # -----
     :postalAddress
         a dsp:DescriptionTemplate ;
-        dsp:standalone "true"^^xsd:boolean ; 
         dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
-        dsp:maxOccur "1"^^xsd:nonNegativeInteger ; 
+        dsp:maxOccur "infinity"^^xsd:string ; 
         dsp:resourceClass ex:PostalAddress ; 
         dsp:statementTemplate [
             a dsp:NonLiteralStatementTemplate ;
             dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
-            dsp:maxOccur "5"^^xsd:nonNegativeInteger ; 
+            dsp:maxOccur "infinity"^^xsd:string ; 
             dsp:property ex:knows ; 
             dsp:nonLiteralConstraint [ 
                 a dsp:NonLiteralConstraint ;
