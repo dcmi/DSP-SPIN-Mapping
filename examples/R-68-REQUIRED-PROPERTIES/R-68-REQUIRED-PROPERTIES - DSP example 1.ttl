@@ -13,29 +13,25 @@
 
 # constraints
 # -----
-    :postalAddress
+    :organizationDescriptionTemplate
         a dsp:DescriptionTemplate ;
         dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
         dsp:maxOccur "infinity"^^xsd:string ; 
-        dsp:resourceClass oer:PostalAddress ; 
+        dsp:resourceClass oer:Organization ; 
         dsp:statementTemplate [
             a dsp:NonLiteralStatementTemplate ;
             dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
             dsp:maxOccur "infinity"^^xsd:string ; 
-            dsp:property oer:addressCountry ; 
-            dsp:nonLiteralConstraint [ 
-                a dsp:NonLiteralConstraint ;
-                dsp:valueClass oer:Country ] ] .
+            dsp:property oer:name ] .
 
 # valid data
 # -----
-ex:myAddress rdf:type oer:PostalAddress .
-ex:myAddress oer:addressCountry ex:netherlands .
-ex:netherlands rdf:type oer:Country .
+ex:dcmi 
+    rdf:type oer:Organization ;
+    oer:name "Dublin Core Metadata Initiative" .
 
 # triples needed for validation:
 # - automatically infered in future versions
 # - as every OWL individual is a owl:Thing
 # -----
-ex:myAddress rdf:type owl:Thing .
-ex:amsterdam rdf:type owl:Thing .
+ex:dcmi  rdf:type owl:Thing .

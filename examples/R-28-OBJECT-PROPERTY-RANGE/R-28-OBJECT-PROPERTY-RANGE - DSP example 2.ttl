@@ -17,23 +17,22 @@
         a dsp:DescriptionTemplate ;
         dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
         dsp:maxOccur "infinity"^^xsd:string ; 
-        dsp:resourceClass ex:PostalAddress ; 
+        dsp:resourceClass oer:PostalAddress ; 
         dsp:statementTemplate [
             a dsp:NonLiteralStatementTemplate ;
             dsp:minOccur "1"^^xsd:nonNegativeInteger ; 
             dsp:maxOccur "infinity"^^xsd:string ; 
-            dsp:property ex:knows ; 
+            dsp:property oer:addressCountry ; 
             dsp:nonLiteralConstraint [ 
                 a dsp:NonLiteralConstraint ;
-                dsp:valueClass foaf:Person ] ] .
+                dsp:valueClass oer:Country ] ] .
+
 
 # invalid data
 # -----
-ex:myAddress rdf:type ex:PostalAddress .
-ex:myAddress ex:knows ex:Antoine .
-ex:myAddress ex:knows ex:Thomas .
-ex:Antoine rdf:type foaf:Human .
-ex:Thomas rdf:type foaf:Human .
+ex:myAddress rdf:type oer:PostalAddress .
+ex:myAddress oer:addressCountry ex:amsterdam .
+ex:amsterdam rdf:type oer:Locality . #the type is wrong
 
 # triples needed for validation:
 # - automatically infered in future versions
